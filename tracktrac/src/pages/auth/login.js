@@ -78,6 +78,7 @@ export default function Login() {
                 try {
                     const api_token = await getAccessToken(clientId, code);
                     localStorage.setItem('api_token', api_token);
+                    console.log('Access token:', api_token);
                     navigate('/home');
                 } catch (error) {
                     console.error('Error getting access token:', error);
