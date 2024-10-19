@@ -93,7 +93,7 @@ export default function Login() {
     };
 
     if (code) {
-        return <div>Loading...</div>; // Show loading state while getting the token
+        return <div>Loading...</div>;
     }
 
     return (
