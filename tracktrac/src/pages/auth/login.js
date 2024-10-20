@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import './login.css';
 const clientId = 'dbacf683ae43492298f8bb02b206df60';
 
 async function redirectToAuthCodeFlow(clientId) {
@@ -98,8 +98,8 @@ export default function Login() {
     }
 
     return (
-        <div>
-            <h1>Login</h1>
+        <div className="login-container">
+            <h1>Log in</h1>
             <button onClick={handleSpotifyLogin}>
                 Sign in with Spotify
             </button>

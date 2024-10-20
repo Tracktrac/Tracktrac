@@ -1,0 +1,36 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; 
+    background-color: #121212; 
+    color: white; 
+}
+
+h1 {
+    margin-bottom: 20px; 
+}
+
+button {
+    padding: 18px 40px; 
+    background-color: #1ed760; 
+    color: black; 
+    border: none; 
+    border-radius: 25px; 
+    cursor: pointer;
+    font-size: 16px; 
+    font-weight: bold; 
+    font-family: 'Montserrat', sans-serif;
+}
+
+
+button:hover {
+    background-color: #3be477;
+    transform: scale(1.01);
+}
