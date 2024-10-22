@@ -4,43 +4,42 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Login from './pages/auth/login';
 import Home from './pages/user/home';
+import Navbar from './components/navbar';
+import { AuthProvider, useAuth } from './context/AuthContext'; // Importamos el contexto
 
 const theme = createTheme({
   palette: {
     mode: 'dark',
+    background: {
+      default: '#080920',
+    },
   },
 });
 
 function App() {
-  
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
-        <AppContent />
+        <AuthProvider>
+          <AppContent />
+        </AuthProvider>
       </Router>
     </ThemeProvider>
   );
 }
 
-
 function AppContent() {
-  const apiToken = localStorage.getItem('apiToken');
+  const { isAuthenticated } = useAuth(); 
+
   return (
     <>
+      {isAuthenticated && <Navbar />} {/* Navbar solo si está autenticado */}
       <Routes>
         <Route
           path="/"
-          element={
-            apiToken ? (
-              <Navigate to="/home" />
-            ) : (
-              <Navigate to="/callback" />
-            )
-          }
+          element={isAuthenticated ? <Navigate to="/home" /> : <Navigate to="/callback" />}
         />
-        <Route path="/" element={<Login />} />
         <Route path="/callback" element={<Login />} />
         <Route path="/home" element={<Home />} />
       </Routes>

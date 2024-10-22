@@ -1,9 +1,9 @@
-/* index.css */
 :root {
-  --background-color: #0A0C2B;
+  --background-color: #080920;
   --text-color: #ffffff;
   --primary-color: #EB1D29; 
   --secondary-color: #535c68;
+  
 }
 
 body {
@@ -13,6 +13,7 @@ body {
   font-family: 'Roboto', sans-serif;
   background-color: var(--background-color);
   color: var(--text-color);
+  min-height: 100vh;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -63,7 +64,7 @@ ul {
   padding: 0;
 }
 
-div {
+.container-centered {
   display: flex;
   justify-content: center;
   align-items: center;

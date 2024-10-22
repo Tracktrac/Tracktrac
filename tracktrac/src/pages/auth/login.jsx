@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { redirectToAuthCodeFlow, getAccessToken } from '../../services/auth';
+import { useAuth } from '../../context/AuthContext'; 
 import '../../styles/login.css';
 
 const clientId = 'dbacf683ae43492298f8bb02b206df60';
@@ -8,6 +9,7 @@ const clientId = 'dbacf683ae43492298f8bb02b206df60';
 export default function Login() {
     const [code, setCode] = useState(localStorage.getItem('code') || null);
     const navigate = useNavigate();
+    const { login } = useAuth(); 
 
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
@@ -24,6 +26,7 @@ export default function Login() {
                 try {
                     const api_token = await getAccessToken(clientId, code);
                     localStorage.setItem('api_token', api_token);
+                    login(); // Actualizar el estado de autenticación
                     navigate('/home');
                 } catch (error) {
                     console.error('Error getting access token:', error);
@@ -31,15 +34,11 @@ export default function Login() {
             }
         };
         fetchToken();
-    }, [code, navigate]);
+    }, [code, login, navigate]);
 
     const handleSpotifyLogin = () => {
         redirectToAuthCodeFlow(clientId);
     };
-
-    if (code) {
-        return <div>Loading...</div>;
-    }
 
     return (
         <div className="login-container">
