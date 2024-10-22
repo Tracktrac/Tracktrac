@@ -1,0 +1,72 @@
+/* index.css */
+:root {
+  --background-color: #0A0C2B;
+  --text-color: #ffffff;
+  --primary-color: #EB1D29; 
+  --secondary-color: #535c68;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  padding: 0;
+}
+
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+button {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: var(--secondary-color);
+}
+
+.logout-button {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+  margin-top: 20px; 
+}
+
+.logout-button:hover {
+  background-color: var(--secondary-color);
+}
+
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+}
