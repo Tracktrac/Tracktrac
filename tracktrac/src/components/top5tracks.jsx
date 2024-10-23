@@ -2,7 +2,7 @@ import React from 'react';
 import Loading from '../components/loading';
 
 const Top5Tracks = ({ tracks = [] }) => {
-  if (!tracks.length) return <Loading message="Loading albums..." />;
+  if (!tracks.length) return <Loading message="Loading tracks..." />;
 
   return (
     <ul>
