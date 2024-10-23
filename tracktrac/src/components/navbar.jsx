@@ -16,21 +16,23 @@ const Navbar = () => {
     setDrawerOpen(open);
   };
 
-  if (loading) return <div></div>;
-  if (error) return <div style={{ color: 'red' }}>{error}</div>;
+  const handleNavigation = (path) => {
+    navigate(path);
+    setDrawerOpen(false); // Cierra el menú después de la navegación
+  };
 
   const drawerContent = (
     <Box onClick={toggleDrawer(false)} sx={{ width: 250 }}>
       <List>
-        <ListItem button onClick={() => navigate('/about')}>
+        <ListItem button onClick={() => handleNavigation('/about')}>
           <ListItemText primary="About" />
         </ListItem>
         {isAuthenticated && (
           <>
-            <ListItem button onClick={() => navigate('/month-recap')}>
+            <ListItem button onClick={() => handleNavigation('/month-recap')}>
               <ListItemText primary="Month Recap" />
             </ListItem>
-            <ListItem button onClick={() => navigate('/year-recap')}>
+            <ListItem button onClick={() => handleNavigation('/year-recap')}>
               <ListItemText primary="Year Recap" />
             </ListItem>
           </>
@@ -68,23 +70,17 @@ const Navbar = () => {
             display: { xs: 'none', md: 'block' },
             cursor: 'pointer',
           }}
-          onClick={() => navigate('/')}
+          onClick={() => handleNavigation('/')}
         >
           TrackTrac
         </Typography>
 
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-          <Button
-            color="inherit"
-            onClick={() => navigate('/about')}
-          >
+          <Button color="inherit" onClick={() => handleNavigation('/about')}>
             About
           </Button>
           {!isAuthenticated && location.pathname === '/about' && (
-            <Button
-              color="inherit"
-              onClick={() => navigate('/callback')} // Navega a la página de inicio de sesión
-            >
+            <Button color="inherit" onClick={() => handleNavigation('/callback')}>
               Sign In
             </Button>
           )}
@@ -92,20 +88,20 @@ const Navbar = () => {
             <>
               <Button
                 color="inherit"
-                onClick={() => navigate('/month-recap')}
+                onClick={() => handleNavigation('/month-recap')}
                 sx={{ display: { xs: 'none', md: 'inline-flex' } }}
               >
                 Month Recap
               </Button>
               <Button
                 color="inherit"
-                onClick={() => navigate('/year-recap')}
+                onClick={() => handleNavigation('/year-recap')}
                 sx={{ display: { xs: 'none', md: 'inline-flex' } }}
               >
                 Year Recap
               </Button>
               <Tooltip title={profileData?.display_name || "Profile"}>
-                <IconButton onClick={() => navigate('/profile')} sx={{ p: 0 }}>
+                <IconButton onClick={() => handleNavigation('/profile')} sx={{ p: 0 }}>
                   <Avatar
                     alt={profileData?.display_name}
                     src={profileData?.images?.[0]?.url}

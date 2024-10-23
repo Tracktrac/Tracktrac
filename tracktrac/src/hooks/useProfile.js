@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { fetchProfileData } from '../services/spotifyApi';
 
+
 export const useProfile = () => {
   const [profileData, setProfileData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -19,7 +20,13 @@ export const useProfile = () => {
       }
     };
 
-    fetchProfile();
+    const token = localStorage.getItem('api_token');
+    if (token) {
+      fetchProfile();
+    } else {
+      setLoading(false); 
+      setError('No API token found, please log in.');
+    }
   }, []);
 
   return { profileData, loading, error };
