@@ -3,7 +3,7 @@ import { useTopTracks } from './useTopTracks';
 
 export const useTopAlbums = (timeRange = 'medium_term', limit = 50) => {
   const { topTracks, loading, error } = useTopTracks(timeRange, limit );
-  const [topAlbums, setTopAlbums] = useState([]); // Array vacío como estado inicial
+  const [topAlbums, setTopAlbums] = useState([]);
 
   useEffect(() => {
     if (topTracks.length) {
