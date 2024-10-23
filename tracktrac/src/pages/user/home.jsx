@@ -56,9 +56,10 @@ const Account = () => {
                     rel="noopener noreferrer"
                     underline="hover"
                     color="primary"
+                    sx={{ display: 'inline-block', wordBreak: 'break-all' }}
                   >
                     {profileData.external_urls?.spotify}
-                  </Link>
+                  </Link>     
                 </Typography>
               </li>
             </ul>

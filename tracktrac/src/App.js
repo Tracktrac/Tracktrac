@@ -7,6 +7,7 @@ import Home from './pages/user/home';
 import MonthRecap from './pages/user/monthrecap';
 import YearRecap from './pages/user/yearrecap';
 import Navbar from './components/navbar';
+import AboutUs from './pages/user/about'; 
 import { AuthProvider, useAuth } from './context/AuthContext';
 
 const theme = createTheme({
@@ -36,16 +37,23 @@ function AppContent() {
 
   return (
     <>
-      {isAuthenticated && <Navbar />}
+      <Navbar /> {/* Muestra el Navbar para todos los usuarios */}
       <Routes>
         <Route
           path="/"
-          element={isAuthenticated ? <Navigate to="/home" /> : <Navigate to="/callback" />}
+          element={isAuthenticated ? <Navigate to="/home" /> : <Navigate to="/about" />} // Redirige a /about si no está autenticado
         />
+        <Route path="/about" element={<AboutUs />} /> {/* Ruta para About Us */}
         <Route path="/callback" element={<Login />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/month-recap" element={<MonthRecap />} />
-        <Route path="/year-recap" element={<YearRecap />} />
+        {isAuthenticated && (
+          <>
+            <Route path="/home" element={<Home />} />
+            <Route path="/month-recap" element={<MonthRecap />} />
+            <Route path="/year-recap" element={<YearRecap />} />
+          </>
+        )}
+        {/* Redirección para rutas desconocidas */}
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </>
   );
