@@ -8,11 +8,11 @@ import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import { useNavigate } from 'react-router-dom';
 import { useProfile } from '../hooks/useProfile';
+import Button from '@mui/material/Button';
 
 const Navbar = () => {
   const { profileData, loading, error } = useProfile();
   const navigate = useNavigate();
-
 
   const handleAvatarClick = () => {
     navigate('/home');
@@ -41,6 +41,12 @@ const Navbar = () => {
         </Typography>
 
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+          <Button color="inherit" onClick={() => navigate('/month-recap')}>
+            Month Recap
+          </Button>
+          <Button color="inherit" onClick={() => navigate('/year-recap')}>
+            Year Recap
+          </Button>
           <Tooltip title="Go to account">
             <IconButton onClick={handleAvatarClick} sx={{ p: 0 }}>
               <Avatar

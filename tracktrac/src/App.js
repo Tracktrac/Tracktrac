@@ -4,8 +4,10 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Login from './pages/auth/login';
 import Home from './pages/user/home';
+import MonthRecap from './pages/user/monthrecap';
+import YearRecap from './pages/user/yearrecap';
 import Navbar from './components/navbar';
-import { AuthProvider, useAuth } from './context/AuthContext'; // Importamos el contexto
+import { AuthProvider, useAuth } from './context/AuthContext';
 
 const theme = createTheme({
   palette: {
@@ -30,11 +32,11 @@ function App() {
 }
 
 function AppContent() {
-  const { isAuthenticated } = useAuth(); 
+  const { isAuthenticated } = useAuth();
 
   return (
     <>
-      {isAuthenticated && <Navbar />} {/* Navbar solo si está autenticado */}
+      {isAuthenticated && <Navbar />}
       <Routes>
         <Route
           path="/"
@@ -42,6 +44,8 @@ function AppContent() {
         />
         <Route path="/callback" element={<Login />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/month-recap" element={<MonthRecap />} />
+        <Route path="/year-recap" element={<YearRecap />} />
       </Routes>
     </>
   );
