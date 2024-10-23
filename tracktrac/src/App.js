@@ -41,10 +41,10 @@ function AppContent() {
       <Routes>
         <Route
           path="/"
-          element={isAuthenticated ? <Navigate to="/home" /> : <Navigate to="/about" />} // Redirige a /about si no está autenticado
+          element={isAuthenticated ? <Navigate to="/home" /> : <Navigate to="/callback" />} // Redirige a /home si está autenticado, sino a /callback
         />
-        <Route path="/about" element={<AboutUs />} /> {/* Ruta para About Us */}
-        <Route path="/callback" element={<Login />} />
+        <Route path="/about" element={<AboutUs />} /> 
+        <Route path="/callback" element={<Login />} /> 
         {isAuthenticated && (
           <>
             <Route path="/home" element={<Home />} />
