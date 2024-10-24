@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import { AppBar, Toolbar, IconButton, Typography, Box, Tooltip, Button, Drawer, List, ListItem, ListItemText, Avatar } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useProfile } from '../hooks/useProfile';
 
 const Navbar = () => {
-  const { isAuthenticated } = useAuth();
-  const { profileData, loading, error } = useProfile();
+  const { isAuthenticated, logout } = useAuth(); // Se agrega 'logout' para manejar la salida
+  const { profileData } = useProfile();
   const navigate = useNavigate();
-  const location = useLocation();
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const toggleDrawer = (open) => () => {
@@ -18,22 +17,42 @@ const Navbar = () => {
 
   const handleNavigation = (path) => {
     navigate(path);
-    setDrawerOpen(false); // Cierra el menú después de la navegación
+    setDrawerOpen(false);
+  };
+
+  const handleLogout = () => {
+    logout(); // Llamada a la función logout para cerrar la sesión
+    navigate('/'); // Redirige al usuario a la página principal
   };
 
   const drawerContent = (
     <Box onClick={toggleDrawer(false)} sx={{ width: 250 }}>
       <List>
-        <ListItem button onClick={() => handleNavigation('/about')}>
-          <ListItemText primary="About" />
-        </ListItem>
-        {isAuthenticated && (
+        {!isAuthenticated ? (
+          <>
+            <ListItem button onClick={() => handleNavigation('/about')}>
+              <ListItemText primary="About" />
+            </ListItem>
+            <ListItem button onClick={() => handleNavigation('/callback')}>
+              <ListItemText primary="Sign In" />
+            </ListItem>
+          </>
+        ) : (
           <>
             <ListItem button onClick={() => handleNavigation('/month-recap')}>
-              <ListItemText primary="Month Recap" />
+              <ListItemText primary="Month Stats" />
             </ListItem>
             <ListItem button onClick={() => handleNavigation('/year-recap')}>
-              <ListItemText primary="Year Recap" />
+              <ListItemText primary="Year Stats" />
+            </ListItem>
+            <ListItem button onClick={() => handleNavigation('/profile')}>
+              <ListItemText primary="Your Profile" />
+            </ListItem>
+            <ListItem button onClick={handleLogout}>
+              <ListItemText primary="Log Out" />
+            </ListItem>
+            <ListItem button onClick={() => handleNavigation('/about')}>
+              <ListItemText primary="About" />
             </ListItem>
           </>
         )}
@@ -76,29 +95,29 @@ const Navbar = () => {
         </Typography>
 
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-          <Button color="inherit" onClick={() => handleNavigation('/about')}>
-            About
-          </Button>
-          {!isAuthenticated && location.pathname === '/about' && (
-            <Button color="inherit" onClick={() => handleNavigation('/callback')}>
-              Sign In
-            </Button>
-          )}
-          {isAuthenticated && (
+          {!isAuthenticated ? (
             <>
-              <Button
-                color="inherit"
-                onClick={() => handleNavigation('/month-recap')}
-                sx={{ display: { xs: 'none', md: 'inline-flex' } }}
-              >
-                Month Recap
+              <Button color="inherit" onClick={() => handleNavigation('/about')}>
+                About
               </Button>
-              <Button
-                color="inherit"
-                onClick={() => handleNavigation('/year-recap')}
-                sx={{ display: { xs: 'none', md: 'inline-flex' } }}
-              >
-                Year Recap
+              <Button color="inherit" onClick={() => handleNavigation('/callback')}>
+                Sign In
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button color="inherit" onClick={() => handleNavigation('/month-recap')}>
+                Month Stats
+              </Button>
+              <Button color="inherit" onClick={() => handleNavigation('/year-recap')}>
+                Year Stats
+              </Button>
+              
+              <Button color="inherit" onClick={handleLogout}>
+                Log Out
+              </Button>
+              <Button color="inherit" onClick={() => handleNavigation('/about')}>
+                About
               </Button>
               <Tooltip title={profileData?.display_name || "Profile"}>
                 <IconButton onClick={() => handleNavigation('/profile')} sx={{ p: 0 }}>
