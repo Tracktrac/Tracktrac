@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Typography, ListItem, ListItemText, ListItemAvatar, Avatar } from '@mui/material';
+import { Box, Typography, ListItem, ListItemText, ListItemAvatar} from '@mui/material';
 import { FixedSizeList } from 'react-window';
 
 const RecentPlayedTracks = ({ tracks = [] }) => {
