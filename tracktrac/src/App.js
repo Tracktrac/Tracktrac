@@ -8,6 +8,7 @@ import MonthRecap from './pages/user/monthrecap';
 import YearRecap from './pages/user/yearrecap';
 import Navbar from './components/navbar';
 import AboutUs from './components/about'; 
+import StatsTopSongsMonth from './features/TopSongs/StatsTopTracksMonth'; 
 import { AuthProvider, useAuth } from './context/AuthContext';
 
 const theme = createTheme({
@@ -50,6 +51,7 @@ function AppContent() {
             <Route path="/home" element={<Home />} />
             <Route path="/month-recap" element={<MonthRecap />} />
             <Route path="/year-recap" element={<YearRecap />} />
+            <Route path="/top-songs-month" element={<StatsTopSongsMonth />} /> {/* Nueva ruta */}
           </>
         )}
         {/* Redirección para rutas desconocidas */}

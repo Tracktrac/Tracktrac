@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Typography, ListItem, ListItemText, ListItemAvatar} from '@mui/material';
+import { Box, ListItem, ListItemText, ListItemAvatar} from '@mui/material';
 import { FixedSizeList } from 'react-window';
+import Loading from '../components/loading';
 
 const RecentPlayedTracks = ({ tracks = [] }) => {
   const [listHeight, setListHeight] = useState(400); // Altura inicial de la lista
@@ -22,7 +23,7 @@ const RecentPlayedTracks = ({ tracks = [] }) => {
     return () => window.removeEventListener('resize', updateHeight);
   }, []);
 
-  if (!tracks.length) return <Typography>Loading recently played tracks...</Typography>;
+  if (!tracks.length) return <Loading message="Loading recently played tracks..." />;
 
   const Row = ({ index, style }) => {
     const track = tracks[index].track;
