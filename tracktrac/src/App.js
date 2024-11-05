@@ -7,7 +7,7 @@ import Home from './pages/user/home';
 import MonthRecap from './pages/user/monthrecap';
 import YearRecap from './pages/user/yearrecap';
 import Navbar from './components/navbar';
-import AboutUs from './pages/user/about'; 
+import AboutUs from './components/about'; 
 import { AuthProvider, useAuth } from './context/AuthContext';
 
 const theme = createTheme({

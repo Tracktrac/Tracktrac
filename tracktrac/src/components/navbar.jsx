@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
-import { AppBar, Toolbar, IconButton, Typography, Box, Tooltip, Button, Drawer, List, ListItem, ListItemText, Avatar } from '@mui/material';
+import { AppBar, Toolbar, IconButton, Typography, Box, Tooltip, Button, Drawer, List, ListItem, ListItemText, Avatar, Menu, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useProfile } from '../hooks/useProfile';
 
 const Navbar = () => {
-  const { isAuthenticated, logout } = useAuth(); // Se agrega 'logout' para manejar la salida
+  const { isAuthenticated, logout } = useAuth();
   const { profileData } = useProfile();
   const navigate = useNavigate();
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [anchorElUser, setAnchorElUser] = useState(null); // Controlador del menú de usuario
 
   const toggleDrawer = (open) => () => {
     setDrawerOpen(open);
@@ -21,8 +22,16 @@ const Navbar = () => {
   };
 
   const handleLogout = () => {
-    logout(); // Llamada a la función logout para cerrar la sesión
-    navigate('/'); // Redirige al usuario a la página principal
+    logout();
+    navigate('/');
+  };
+
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget); // Abre el menú al hacer clic en el avatar
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null); // Cierra el menú
   };
 
   const drawerContent = (
@@ -30,28 +39,28 @@ const Navbar = () => {
       <List>
         {!isAuthenticated ? (
           <>
-            <ListItem button onClick={() => handleNavigation('/about')}>
+            <ListItem button={true} onClick={() => handleNavigation('/about')}>
               <ListItemText primary="About" />
             </ListItem>
-            <ListItem button onClick={() => handleNavigation('/callback')}>
+            <ListItem button={true} onClick={() => handleNavigation('/callback')}>
               <ListItemText primary="Sign In" />
             </ListItem>
           </>
         ) : (
           <>
-            <ListItem button onClick={() => handleNavigation('/month-recap')}>
-              <ListItemText primary="Month Stats" />
+            <ListItem button={true} onClick={() => handleNavigation('/month-recap')}>
+              <ListItemText primary="Month Recap" />
             </ListItem>
-            <ListItem button onClick={() => handleNavigation('/year-recap')}>
-              <ListItemText primary="Year Stats" />
+            <ListItem button={true} onClick={() => handleNavigation('/year-recap')}>
+              <ListItemText primary="Year Recap" />
             </ListItem>
-            <ListItem button onClick={() => handleNavigation('/profile')}>
+            <ListItem button={true} onClick={() => handleNavigation('/profile')}>
               <ListItemText primary="Your Profile" />
             </ListItem>
-            <ListItem button onClick={handleLogout}>
+            <ListItem button={true} onClick={handleLogout}>
               <ListItemText primary="Log Out" />
             </ListItem>
-            <ListItem button onClick={() => handleNavigation('/about')}>
+            <ListItem button={true} onClick={() => handleNavigation('/about')}>
               <ListItemText primary="About" />
             </ListItem>
           </>
@@ -94,7 +103,7 @@ const Navbar = () => {
           TrackTrac
         </Typography>
 
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+        <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', gap: 2 }}>
           {!isAuthenticated ? (
             <>
               <Button color="inherit" onClick={() => handleNavigation('/about')}>
@@ -107,26 +116,32 @@ const Navbar = () => {
           ) : (
             <>
               <Button color="inherit" onClick={() => handleNavigation('/month-recap')}>
-                Month Stats
+                Month Recap
               </Button>
               <Button color="inherit" onClick={() => handleNavigation('/year-recap')}>
-                Year Stats
+                Year Recap
               </Button>
               
-              <Button color="inherit" onClick={handleLogout}>
-                Log Out
-              </Button>
               <Button color="inherit" onClick={() => handleNavigation('/about')}>
                 About
               </Button>
               <Tooltip title={profileData?.display_name || "Profile"}>
-                <IconButton onClick={() => handleNavigation('/profile')} sx={{ p: 0 }}>
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar
                     alt={profileData?.display_name}
                     src={profileData?.images?.[0]?.url}
                   />
                 </IconButton>
               </Tooltip>
+              <Menu
+                anchorEl={anchorElUser}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+                sx={{ mt: '45px' }}
+              >
+                <MenuItem onClick={() => handleNavigation('/')}>Home</MenuItem>
+                <MenuItem onClick={handleLogout}>Log Out</MenuItem>
+              </Menu>
             </>
           )}
         </Box>

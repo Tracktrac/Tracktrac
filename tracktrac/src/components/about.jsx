@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Typography, Link, Container, Grid } from '@mui/material';
-import CDImage from './assets/logo.png'; 
+import CDImage from './../assets/logo.png'; 
 
 const AboutUs = () => {
   return (
