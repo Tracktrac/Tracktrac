@@ -17,6 +17,24 @@ export const fetchProfileData = async () => {
 };
 
 
+// Función para hacer fetch de las pistas reproducidas recientemente
+export const fetchRecentlyPlayedTracks = async (limit = 20) => {
+  const apiToken = getApiToken();
+  if (!apiToken) throw new Error("No API token found");
+
+  const response = await fetch(
+    `${API_BASE_URL}/me/player/recently-played?limit=${limit}`,
+    { headers: { Authorization: `Bearer ${apiToken}` } }
+  );
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    console.error('Error fetching recently played tracks:', errorData);
+    throw new Error(`Recently played tracks fetch failed: ${errorData.error.message}`);
+  }
+
+  return response.json();
+};
 
 
 // Función para hacer fetch de las top canciones 
