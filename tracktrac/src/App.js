@@ -5,11 +5,14 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Login from './pages/auth/login';
 import Home from './pages/user/home';
 import MonthRecap from './pages/user/monthrecap';
+import SixMonthRecap from './pages/user/sixmonthrecap';
 import YearRecap from './pages/user/yearrecap';
+import Lifetime from './pages/user/lifetime';
 import Navbar from './components/navbar';
 import AboutUs from './components/about'; 
 import StatsTopSongsMonth from './features/TopSongs/StatsTopTracksMonth'; 
 import { AuthProvider, useAuth } from './context/AuthContext';
+
 
 const theme = createTheme({
   palette: {
@@ -50,7 +53,9 @@ function AppContent() {
           <>
             <Route path="/home" element={<Home />} />
             <Route path="/month-recap" element={<MonthRecap />} />
+            <Route path="/six-month-recap" element={<SixMonthRecap />} />
             <Route path="/year-recap" element={<YearRecap />} />
+            <Route path="/lifetime" element={<Lifetime />} />
             <Route path="/top-songs-month" element={<StatsTopSongsMonth />} /> {/* Nueva ruta */}
           </>
         )}

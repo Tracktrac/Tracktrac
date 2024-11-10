@@ -51,8 +51,14 @@ const Navbar = () => {
             <ListItem button={true} onClick={() => handleNavigation('/month-recap')}>
               <ListItemText primary="Month Recap" />
             </ListItem>
+            <ListItem button={true} onClick={() => handleNavigation('/six-month-recap')}>
+              <ListItemText primary="6 Month Recap" />
+            </ListItem>
             <ListItem button={true} onClick={() => handleNavigation('/year-recap')}>
               <ListItemText primary="Year Recap" />
+            </ListItem>
+            <ListItem button={true} onClick={() => handleNavigation('/lifetime')}>
+              <ListItemText primary="Lifetime" />
             </ListItem>
             <ListItem button={true} onClick={() => handleNavigation('/profile')}>
               <ListItemText primary="Your Profile" />
@@ -118,8 +124,14 @@ const Navbar = () => {
               <Button color="inherit" onClick={() => handleNavigation('/month-recap')}>
                 Month Recap
               </Button>
+              <Button color="inherit" onClick={() => handleNavigation('/six-month-recap')}>
+                6 Month Recap
+              </Button>
               <Button color="inherit" onClick={() => handleNavigation('/year-recap')}>
                 Year Recap
+              </Button>
+              <Button color="inherit" onClick={() => handleNavigation('/lifetime')}>
+                Lifetime
               </Button>
               
               <Button color="inherit" onClick={() => handleNavigation('/about')}>
