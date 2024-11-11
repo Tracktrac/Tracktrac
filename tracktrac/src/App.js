@@ -12,6 +12,7 @@ import Navbar from './components/navbar';
 import AboutUs from './components/about'; 
 import StatsTopSongsMonth from './features/TopSongs/StatsTopTracksMonth'; 
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { DataProvider } from './context/DataContext';
 
 
 const theme = createTheme({
@@ -29,7 +30,9 @@ function App() {
       <CssBaseline />
       <Router>
         <AuthProvider>
-          <AppContent />
+          <DataProvider>
+            <AppContent />
+          </DataProvider>
         </AuthProvider>
       </Router>
     </ThemeProvider>

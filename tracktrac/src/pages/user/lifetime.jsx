@@ -1,32 +1,16 @@
-import React, { useState } from 'react';
+// pages/user/lifetime.jsx
+import React, { useState, useEffect } from 'react';
+import { useDataContext } from '../../context/DataContext';
 
 function UploadHistory() {
+  const { uploadedData, uploadedFilesInfo, errorMessage, handleFilesUpload } = useDataContext();
   const [topSongs, setTopSongs] = useState([]);
 
-  const handleFilesUpload = (event) => {
-    const files = Array.from(event.target.files);
-    const promises = files.map((file) => {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          try {
-            const json = JSON.parse(e.target.result);
-            resolve(json);
-          } catch (error) {
-            reject(error);
-          }
-        };
-        reader.readAsText(file);
-      });
-    });
-
-    Promise.all(promises)
-      .then((results) => {
-        const allData = results.flat(); // Combina todos los datos de los archivos
-        processTopSongs(allData);
-      })
-      .catch((error) => console.error('Error loading files:', error));
-  };
+  useEffect(() => {
+    if (uploadedData.length > 0) {
+      processTopSongs(uploadedData);
+    }
+  }, [uploadedData]);
 
   const processTopSongs = (data) => {
     const songCounts = {};
@@ -38,10 +22,9 @@ function UploadHistory() {
       }
     });
 
-    // Ordena las canciones por cantidad de reproducciones
     const sortedSongs = Object.entries(songCounts)
       .sort((a, b) => b[1] - a[1])
-      .slice(0, 5); // Top 5 canciones
+      .slice(0, 5);
 
     setTopSongs(sortedSongs);
   };
@@ -49,7 +32,30 @@ function UploadHistory() {
   return (
     <div>
       <h1>Top 5 Canciones Más Escuchadas</h1>
-      <input type="file" accept=".json" multiple onChange={handleFilesUpload} />
+
+      {/* Muestra los archivos subidos o el campo para subir archivos si no hay archivos subidos */}
+      {uploadedFilesInfo.length === 0 ? (
+        <input
+          type="file"
+          accept=".json"
+          multiple
+          onChange={(e) => handleFilesUpload(e.target.files)}
+        />
+      ) : (
+        <div>
+          <h3>Archivos subidos:</h3>
+          <ul>
+            {uploadedFilesInfo.map((fileName, index) => (
+              <li key={index}>{fileName}</li>
+            ))}
+          </ul>
+          <p>Total de archivos: {uploadedFilesInfo.length}</p>
+        </div>
+      )}
+
+      {/* Mensaje de error si el archivo no es JSON */}
+      {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+
       <div>
         {topSongs.length > 0 ? (
           <ul>
