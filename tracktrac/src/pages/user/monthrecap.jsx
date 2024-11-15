@@ -6,17 +6,17 @@ import Top5Albums from '../../components/top5albums';
 import { useTopTracks } from '../../hooks/useTopTracks';
 import { useTopArtists } from '../../hooks/useTopArtists';
 import { useTopAlbums } from '../../hooks/useTopAlbums';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 const MonthRecap = () => {
   const { topTracks } = useTopTracks('short_term');
   const { topArtists } = useTopArtists('short_term');
   const { topAlbums } = useTopAlbums('short_term');
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  const handleSeeMoreClick = () => {
-    navigate('/top-songs-month');
-  };
+  // const handleSeeMoreClick = () => {
+  //   navigate('/top-songs-month');
+  // };
 
   return (
     <Container maxWidth="lg" sx={{ paddingTop: 4 }}>
@@ -30,14 +30,14 @@ const MonthRecap = () => {
               Your Top Tracks
             </Typography>
             <Top5Tracks tracks={topTracks} />
-            <Button 
+            {/* <Button 
               variant="contained" 
               color="secondary" 
               onClick={handleSeeMoreClick}
               sx={{ mt: 2 }}
             >
               See More
-            </Button>
+            </Button> */}
           </Box>
         </Grid>
         <Grid item xs={12} md={4}>
