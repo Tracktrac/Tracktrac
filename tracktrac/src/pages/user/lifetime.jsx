@@ -21,7 +21,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 function UploadHistory() {
   const { uploadedData, uploadedFilesInfo, errorMessage, handleFilesUpload } = useDataContext();
   const [topSongs, setTopSongs] = useState([]);
-  const [topAlbums, setTopAlbums] = useState([]);
+  //const [topAlbums, setTopAlbums] = useState([]);
   const [topArtists, setTopArtists] = useState([]);
   const [totalPlays, setTotalPlays] = useState(0);
   const [totalMinutes, setTotalMinutes] = useState(0);
@@ -59,7 +59,7 @@ function UploadHistory() {
 
   const processTopSongs = (data) => {
     const songCounts = {};
-    const albumCounts = {};
+    //const albumCounts = {};
     const artistCounts = {};
 
     data.forEach((item) => {
