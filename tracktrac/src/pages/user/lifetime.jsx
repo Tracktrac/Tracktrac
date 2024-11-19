@@ -64,16 +64,16 @@ function UploadHistory() {
 
     data.forEach((item) => {
       const trackName = item.master_metadata_track_name;
-      const albumName = item.master_metadata_album_album_name;
+      //const albumName = item.master_metadata_album_album_name;
       const artistName = item.master_metadata_album_artist_name;
 
       if (trackName) songCounts[trackName] = (songCounts[trackName] || 0) + 1;
-      if (albumName) albumCounts[albumName] = (albumCounts[albumName] || 0) + 1;
+      //if (albumName) albumCounts[albumName] = (albumCounts[albumName] || 0) + 1;
       if (artistName) artistCounts[artistName] = (artistCounts[artistName] || 0) + 1;
     });
 
     setTopSongs(Object.entries(songCounts).sort((a, b) => b[1] - a[1]).slice(0, 10));
-    setTopAlbums(Object.entries(albumCounts).sort((a, b) => b[1] - a[1]).slice(0, 10));
+    //setTopAlbums(Object.entries(albumCounts).sort((a, b) => b[1] - a[1]).slice(0, 10));
     setTopArtists(Object.entries(artistCounts).sort((a, b) => b[1] - a[1]).slice(0, 10));
   };
 
