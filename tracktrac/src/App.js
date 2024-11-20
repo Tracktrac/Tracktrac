@@ -34,6 +34,18 @@ const theme = createTheme({
       fontFamily: '"Host Grotesk", sans-serif',
     },
   },
+  components: {
+    MuiCardHeader: {
+      styleOverrides: {
+        title: {
+          fontSize: '1.2rem !important',// Cambia el tamaño de la fuente del CardHeader
+        },
+        root: {
+          paddingBottom: 0,
+        },
+      },
+    },
+  },
 });
 
 function App() {

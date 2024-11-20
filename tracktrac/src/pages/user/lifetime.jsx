@@ -119,98 +119,103 @@ function UploadHistory() {
   };
 
   return (
-    <Container maxWidth="lg" sx={styles.container}>
+    <Container maxWidth="xl" sx={styles.container}>
       <Typography variant="h3" gutterBottom sx={styles.title}>
         Spotify Listening Recap
       </Typography>
 
-{/* SUBIR ARCHIVOS */}
-      {uploadedFilesInfo.length === 0 ? (
-        <Box textAlign="center">
-          <Button
-            variant="contained"
-            startIcon={<UploadFileIcon />}
-            component="label"
-            sx={styles.uploadButton}
-          >
-            Subir Archivos JSON
-            <input
-              type="file"
-              accept=".json"
-              multiple
-              hidden
-              onChange={(e) => handleFilesUpload(e.target.files)}
-            />
-          </Button>
-        </Box>
-      ) : (
-// ARCHIVOS SUBIDOS
-        <Card sx={styles.uploadedCard}>
-          <CardHeader
-            sx={styles.uploadedCardTitle}
-            title={`${uploadedFilesInfo.length} Archivos Subidos`} // Usando template string
-          />
-          <CardContent>
-            <List>
-              {uploadedFilesInfo.map((fileName, index) => (
-                <Card sx={styles.filesCard}>
-                  <CardContent sx={styles.filesCardContent}>
-                    <FileCopy sx={{ color: '#7275C7' }}/>
-                    <Typography variant="body1" sx={styles.fileName}>
-                      {fileName}
-                    </Typography>
-                  </CardContent>
-                </Card>
-              ))}
-            </List>
-          </CardContent>
-        </Card>
-      )}
-
-{/* TOTALES DE ESCUCHA */}
+      {/* ROW CON TRES COLUMNAS */}
       <Grid container spacing={4}>
-        <Grid item xs={12} md={6}>
-          <Card sx={styles.listenedCard}>
-            <CardHeader title="Totales de Escucha" />
-            <CardContent>
-              <Card sx={styles.listenedCardItem}>
-                <CardContent sx={styles.listenedCardContent}>
-                  <HeadphonesIcon sx={styles.listenedIcon} />
-                  <Typography sx={styles.listenedText}>{totalPlays} reproducciones</Typography>
-                </CardContent>
-              </Card>
-              <Card sx={styles.listenedCardItem}>
-                <CardContent sx={styles.listenedCardContent}>
-                  <HeadphonesIcon sx={styles.listenedIcon} />
-                  <Typography sx={styles.listenedText}>{totalMinutes} minutos escuchados</Typography>
-                </CardContent>
-              </Card>
-              <Card sx={styles.listenedCardItem}>
-                <CardContent sx={styles.listenedCardContent}>
-                  <HeadphonesIcon sx={styles.listenedIcon} />
-                  <Typography sx={styles.listenedText}>{totalHours} horas escuchadas</Typography>
-                </CardContent>
-              </Card>
-              <Card sx={styles.listenedCardItem}>
-                <CardContent sx={styles.listenedCardContent}>
-                  <HeadphonesIcon sx={styles.listenedIcon} />
-                  <Typography sx={styles.listenedText}>{totalDays} días escuchados</Typography>
-                </CardContent>
-              </Card>
+        {/* PRIMERA COLUMNA */}
+        <Grid item xs={12} md={4}>
+
+  {/* SUBIR ARCHIVOS */}
+        {uploadedFilesInfo.length === 0 ? (
+          <Box textAlign="center">
+            <Button
+              variant="contained"
+              startIcon={<UploadFileIcon />}
+              component="label"
+              sx={styles.uploadButton}
+            >
+              Subir Archivos JSON
+              <input
+                type="file"
+                accept=".json"
+                multiple
+                hidden
+                onChange={(e) => handleFilesUpload(e.target.files)}
+              />
+            </Button>
+          </Box>
+        ) : (
+  // ARCHIVOS SUBIDOS
+          <Card sx={styles.uploadedCard}>
+            <CardHeader
+              // sx={styles.uploadedCardTitle}
+              title={`${uploadedFilesInfo.length} Archivos Subidos`} // Usando template string
+            />
+            <CardContent sx={styles.uploadedContent}>
+              <List>
+                {uploadedFilesInfo.map((fileName, index) => (
+                  <Card sx={styles.filesCard}>
+                    <CardContent sx={styles.filesCardContent}>
+                      <FileCopy sx={{ color: '#7275C7' }}/>
+                      <Typography sx={styles.fileName}>
+                        {fileName}
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                ))}
+              </List>
             </CardContent>
           </Card>
-        </Grid>
+        )}
 
-{/* GRAFICO REPRODUCCIONES POR AÑO */}
-        <Grid item xs={12} md={6}>
+  {/* TOTALES DE ESCUCHA */}
+        {/* <Grid container spacing={4}>
+          <Grid item xs={12} md={6}> */}
+            <Card sx={styles.listenedCard}>
+              <CardHeader title="Totales de Escucha" />
+              <CardContent>
+                <Card sx={styles.listenedCardItem}>
+                  <CardContent sx={styles.listenedCardContent}>
+                    <HeadphonesIcon sx={styles.listenedIcon} />
+                    <Typography sx={styles.listenedText}>{totalPlays} reproducciones</Typography>
+                  </CardContent>
+                </Card>
+                <Card sx={styles.listenedCardItem}>
+                  <CardContent sx={styles.listenedCardContent}>
+                    <HeadphonesIcon sx={styles.listenedIcon} />
+                    <Typography sx={styles.listenedText}>{totalMinutes} minutos escuchados</Typography>
+                  </CardContent>
+                </Card>
+                <Card sx={styles.listenedCardItem}>
+                  <CardContent sx={styles.listenedCardContent}>
+                    <HeadphonesIcon sx={styles.listenedIcon} />
+                    <Typography sx={styles.listenedText}>{totalHours} horas escuchadas</Typography>
+                  </CardContent>
+                </Card>
+                <Card sx={styles.listenedCardItem}>
+                  <CardContent sx={styles.listenedCardContent}>
+                    <HeadphonesIcon sx={styles.listenedIcon} />
+                    <Typography sx={styles.listenedText}>{totalDays} días escuchados</Typography>
+                  </CardContent>
+                </Card>
+              </CardContent>
+            </Card>
+          {/* </Grid> */}
+
+  {/* GRAFICO REPRODUCCIONES POR AÑO */}
+          {/* <Grid item xs={12} md={6}> */}
           <Card sx={styles.chartCard}>
             <CardHeader title="Gráfico: Reproducciones por Año" />
             <CardContent sx={styles.chartContainer}>
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={yearlyData}>
                   <CartesianGrid strokearray="3 3" vertical={false} />
-                  <XAxis axisLine={false} stroke="#fff" dataKey="year" />
-                  <YAxis axisLine={false} stroke="#fff" tickFormatter={(value) => `${(value / 1000).toFixed(1)}k`} />
+                  <XAxis axisLine={false} stroke="#fff" dataKey="year" tick={{ fontSize: '0.8rem' }} />
+                  <YAxis axisLine={false} stroke="#fff" tickFormatter={(value) => `${(value / 1000).toFixed(1)}k`} tick={{ fontSize: '0.8rem' }} />
                   <Tooltip content={<CustomTooltip />} />
                   <Area dataKey="count" stroke="#8884d8" fill="#fff" />
                   <Line dot={{ fill: '#0E8943', stroke: '#0E8943', r: 3 }} type="monotone" dataKey="count" stroke="#0E8943" />
@@ -218,56 +223,60 @@ function UploadHistory() {
               </ResponsiveContainer>
             </CardContent>
           </Card>
-        </Grid>
+          </Grid>
 
-{/* CANCIONES MAS ESCUCHADAS */}
-        <Grid item xs={12} md={6}>
-          <Card sx={styles.card}>
-            <CardHeader title="Canciones Más Escuchadas" />
-            <CardContent>
-              {topSongs.length > 0 ? (
-                <List sx={styles.list}>
-                  {topSongs.map(([song, count], index) => (
-                    <ListItem key={`song-${index}`} sx={styles.listItem}>
-                      <ListItemText
-                        primary={`${index + 1}. ${song}`}
-                        secondary={`${count} reproducciones`}
-                        sx={styles.listItemText}
-                      />
-                    </ListItem>
-                  ))}
-                </List>
-              ) : (
-                <Typography sx={styles.typography}>No hay datos disponibles</Typography>
-              )}
-            </CardContent>
-          </Card>
-        </Grid>
+  {/* CANCIONES MAS ESCUCHADAS */}
+  {/* SEGUNDA COLUMNA */}
+        <Grid item xs={12} md={4}>
+          {/* <Grid item xs={12} md={6}> */}
+            <Card sx={styles.card}>
+              <CardHeader title="Canciones Más Escuchadas" />
+              <CardContent>
+                {topSongs.length > 0 ? (
+                  <List sx={styles.list}>
+                    {topSongs.map(([song, count], index) => (
+                      <ListItem key={`song-${index}`} sx={styles.listItem}>
+                        <ListItemText
+                          primary={`${index + 1}. ${song}`}
+                          secondary={`${count} reproducciones`}
+                          sx={styles.listItemText}
+                        />
+                      </ListItem>
+                    ))}
+                  </List>
+                ) : (
+                  <Typography sx={styles.typography}>No hay datos disponibles</Typography>
+                )}
+              </CardContent>
+            </Card>
+          </Grid>
 
-{/* ARTISTAS MAS ESCUCHADOS */}
-        <Grid item xs={12} md={6}>
-          <Card sx={styles.card}>
-            <CardHeader title="Artistas Más Escuchados" />
-            <CardContent>
-              {topArtists.length > 0 ? (
-                <List sx={styles.list}>
-                  {topArtists.map(([artist, count], index) => (
-                    <ListItem key={`artist-${index}`} sx={styles.listItem}>
-                      <ListItemText
-                        primary={`${index + 1}. ${artist}`}
-                        secondary={`${count} reproducciones`}
-                        sx={styles.listItemText}
-                      />
-                    </ListItem>
-                  ))}
-                </List>
-              ) : (
-                <Typography sx={styles.typography}>No hay datos disponibles</Typography>
-              )}
-            </CardContent>
-          </Card>
+  {/* ARTISTAS MAS ESCUCHADOS */}
+  {/* TERCERA COLUMNA */}
+  <Grid item xs={12} md={4}>
+          {/* <Grid item xs={12} md={6}> */}
+            <Card sx={styles.card}>
+              <CardHeader title="Artistas Más Escuchados" />
+              <CardContent>
+                {topArtists.length > 0 ? (
+                  <List sx={styles.list}>
+                    {topArtists.map(([artist, count], index) => (
+                      <ListItem key={`artist-${index}`} sx={styles.listItem}>
+                        <ListItemText
+                          primary={`${index + 1}. ${artist}`}
+                          secondary={`${count} reproducciones`}
+                          sx={styles.listItemText}
+                        />
+                      </ListItem>
+                    ))}
+                  </List>
+                ) : (
+                  <Typography sx={styles.typography}>No hay datos disponibles</Typography>
+                )}
+              </CardContent>
+            </Card>
+          </Grid>
         </Grid>
-      </Grid>
     
 {/* ERROR */}
       {errorMessage && (
@@ -289,10 +298,13 @@ const styles = {
     textAlign: 'center',
     marginBottom: 4,
     fontWeight: 'bold',
+    fontSize: '2rem',
   },
   uploadButton: {
-    paddingX: 4,
-    paddingY: 2,
+    paddingX: 3, // Reducido de 4 a 3
+    paddingY: 1.5, // Reducido de 2 a 1.5
+    borderRadius: 2,
+    marginBottom: 1.5,
     backgroundColor: '#06b6d4',
     color: '#fff',
     ':hover': {
@@ -301,51 +313,63 @@ const styles = {
   },
   // ARCHIVOS SUBIDOS
   uploadedCard: {
-    marginBottom: 3,
+    marginBottom: 2, // Reducido de 3 a 2
     boxShadow: 3,
-    borderRadius: 10,
-    padding: 2,
+    borderRadius: 8, // Reducido de 10 a 8
+    paddingLeft: 2, // Reducido de 2 a 1.5
+    paddingRight: 2,
+    paddingTop: 2,
+    paddingBottom: 0,
     backgroundColor: '#0F0A33',
   },
   uploadedCardTitle:{
-    marginLeft: 2,
-    marginBottom: -2,
+    fontSize: '0.8rem', // Reducido de 1rem a 0.8rem
+  },
+  uploadedContent:{
+    margin:0,
+    paddingBottom:0,
+    paddingTop:0
   },
   filesCard: {
-    borderRadius: 5,
-    marginBottom: 1,
+    borderRadius: 4, // Reducido de 5 a 4
+    marginBottom: 0.8, // Reducido de 1 a 0.8
     backgroundColor: '#19114C',
   },
   filesCardContent: {
     display: 'flex',
     alignItems: 'center',
+    paddingBottom:0,
     padding: 2,
   },
   fileName:{
     color: '#7275C7',
     marginLeft: 1,
+    // fontSize: 12,
+    fontSize: '0.8rem', // Reducido de 12px a 0.9rem
   },
 
   //TOTALES DE ESCUCHA
   listenedCard: {
     boxShadow: 3,
-    borderRadius: 10,
-    padding: 2,
+    borderRadius: 8, // Reducido de 10 a 8
+    paddingLeft: 1.5, // Reducido de 2 a 1.5
+    paddingTop: 1.5,
+    paddingRight: 1.5,
     backgroundColor: '#DC4D56',
+    marginBottom: 2,
   },
   listenedText: {
-    fontSize: 18,
-    marginBottom: 1,
-    marginTop: 1,
+    fontSize: '0.8rem', // Reducido de 1.5rem a 1rem
+    marginTop: 0.4, // Reducido de 1 a 0.8
     fontFamily: 'Host Grotesk, sans-serif',
     color: '#FDA5AB',
   },
   listenedCardItem: {
     marginBottom: 1,
     // boxShadow: 2,
-    borderRadius: 6,
+    borderRadius: 4,
     backgroundColor: '#C02F39',
-    // height: 80,
+    height: '3.5rem',
   },
   listenedCardContent: {
     display: 'flex',
