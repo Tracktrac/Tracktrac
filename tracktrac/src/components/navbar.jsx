@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { AppBar, Toolbar, IconButton, Typography, Box, Tooltip, Button, Drawer, List, ListItem, ListItemText, Avatar, Menu, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import InfoIcon from '@mui/icons-material/Info';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useProfile } from '../hooks/useProfile';
@@ -35,38 +39,65 @@ const Navbar = () => {
   };
 
   const drawerContent = (
-    <Box onClick={toggleDrawer(false)} sx={{ width: 250 }}>
-      <List>
+    <Box onClick={toggleDrawer(false)} sx={{ width: 250, }}>
+      <List >
         {!isAuthenticated ? (
           <>
             <ListItem button={true} onClick={() => handleNavigation('/about')}>
+              <IconButton edge="start" color="inherit">
+                <InfoIcon />
+              </IconButton>
               <ListItemText primary="About" />
             </ListItem>
             <ListItem button={true} onClick={() => handleNavigation('/callback')}>
+              <IconButton edge="start" color="inherit">
+                <AccountCircleIcon />
+              </IconButton>
               <ListItemText primary="Sign In" />
             </ListItem>
           </>
         ) : (
           <>
             <ListItem button={true} onClick={() => handleNavigation('/month-recap')}>
+              <IconButton edge="start" color="inherit">
+                <TrendingUpIcon />
+              </IconButton>
               <ListItemText primary="Month Recap" />
             </ListItem>
             <ListItem button={true} onClick={() => handleNavigation('/six-month-recap')}>
+              <IconButton edge="start" color="inherit">
+                <TrendingUpIcon />
+              </IconButton>
               <ListItemText primary="6 Month Recap" />
             </ListItem>
             <ListItem button={true} onClick={() => handleNavigation('/year-recap')}>
+              <IconButton edge="start" color="inherit">
+                <TrendingUpIcon />
+              </IconButton>
               <ListItemText primary="Year Recap" />
             </ListItem>
             <ListItem button={true} onClick={() => handleNavigation('/lifetime')}>
+              <IconButton edge="start" color="inherit">
+                <TrendingUpIcon />
+              </IconButton>
               <ListItemText primary="Lifetime" />
             </ListItem>
             <ListItem button={true} onClick={() => handleNavigation('/profile')}>
+              <IconButton edge="start" color="inherit">
+                <AccountCircleIcon />
+              </IconButton>
               <ListItemText primary="Your Profile" />
             </ListItem>
             <ListItem button={true} onClick={handleLogout}>
+              <IconButton edge="start" color="inherit">
+                <ExitToAppIcon />
+              </IconButton>
               <ListItemText primary="Log Out" />
             </ListItem>
             <ListItem button={true} onClick={() => handleNavigation('/about')}>
+              <IconButton edge="start" color="inherit">
+                <InfoIcon />
+              </IconButton>
               <ListItemText primary="About" />
             </ListItem>
           </>
@@ -87,7 +118,16 @@ const Navbar = () => {
         >
           <MenuIcon />
         </IconButton>
-        <Drawer open={drawerOpen} onClose={toggleDrawer(false)}>
+        <Drawer
+          open={drawerOpen}
+          onClose={toggleDrawer(false)}
+          sx={{
+            backgroundColor: '#0A0C2B', // Aquí aplicas el color deseado
+            '& .MuiDrawer-paper': {
+              backgroundColor: '#0A0C2B', // Para asegurarte de que el color se aplique al contenido del Drawer
+            },
+          }}
+        >
           {drawerContent}
         </Drawer>
 
@@ -113,31 +153,37 @@ const Navbar = () => {
           {!isAuthenticated ? (
             <>
               <Button color="inherit" onClick={() => handleNavigation('/about')}>
+                <InfoIcon sx={{ marginRight: 1 }} />
                 About
               </Button>
               <Button color="inherit" onClick={() => handleNavigation('/callback')}>
+                <AccountCircleIcon sx={{ marginRight: 1 }} />
                 Sign In
               </Button>
             </>
           ) : (
             <>
               <Button color="inherit" onClick={() => handleNavigation('/month-recap')}>
+                <TrendingUpIcon sx={{ marginRight: 1 }} />
                 Month Recap
               </Button>
               <Button color="inherit" onClick={() => handleNavigation('/six-month-recap')}>
+                <TrendingUpIcon sx={{ marginRight: 1 }} />
                 6 Month Recap
               </Button>
               <Button color="inherit" onClick={() => handleNavigation('/year-recap')}>
+                <TrendingUpIcon sx={{ marginRight: 1 }} />
                 Year Recap
               </Button>
               <Button color="inherit" onClick={() => handleNavigation('/lifetime')}>
+                <TrendingUpIcon sx={{ marginRight: 1 }} />
                 Lifetime
               </Button>
-              
               <Button color="inherit" onClick={() => handleNavigation('/about')}>
+                <InfoIcon sx={{ marginRight: 1 }} />
                 About
               </Button>
-              <Tooltip title={profileData?.display_name || "Profile"}>
+              <Tooltip title={profileData?.display_name || 'Profile'}>
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar
                     alt={profileData?.display_name}
