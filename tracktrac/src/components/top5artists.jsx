@@ -1,23 +1,59 @@
 import React from 'react';
+import styled from 'styled-components';
 import Loading from '../components/loading';
 
 const Top5Artists = ({ artists = [] }) => {
   if (!artists.length) return <Loading message="Loading artists..." />;
 
   return (
-    <ul>
+    <ArtistList>
       {artists.map((artist, index) => (
-        <li key={artist.id} style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
-          <img 
+        <ArtistItem key={artist.id}>
+          <ArtistIndex>{index + 1}</ArtistIndex>
+          <ArtistImage 
             src={artist.images[0]?.url} 
             alt={artist.name} 
-            style={{ width: 100, height: 100, marginRight: '10px', borderRadius: '5px' }}
           />
-          <h3>#{index + 1} {artist.name}</h3>
-        </li>
+          <ArtistName>{artist.name}</ArtistName>
+        </ArtistItem>
       ))}
-    </ul>
+    </ArtistList>
   );
 };
+
+// Estilos con styled-components
+const ArtistList = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 0;
+`;
+
+const ArtistItem = styled.li`
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+`;
+
+const ArtistIndex = styled.div`
+  font-size: 2rem; 
+  font-weight: bold;
+  margin-right: 15px; 
+  color: #fff; 
+`;
+
+const ArtistImage = styled.img`
+  width: 100px;
+  height: 100px;
+  margin-right: 10px;
+  border-radius: 10px; 
+`;
+
+const ArtistName = styled.h3`
+  font-size: 1.1rem;
+  color: #fff;
+  margin: 0;
+  align-items: flex-start;
+  text-align: left;
+`;
 
 export default Top5Artists;
