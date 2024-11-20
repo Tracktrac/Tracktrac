@@ -11,8 +11,6 @@ import {
   CardContent,
   CardHeader,
   List,
-  ListItem,
-  ListItemText,
 } from '@mui/material';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import HeadphonesIcon from '@mui/icons-material/Headphones';
