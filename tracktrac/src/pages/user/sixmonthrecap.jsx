@@ -19,7 +19,7 @@ const SixMonthRecap = () => {
       </Typography>
       <Grid container spacing={4}>
         <Grid item xs={12} md={4}>
-          <Box bgcolor="rgb(205, 94, 94)" p={3} borderRadius={2} textAlign="center">
+          <Box bgcolor="#DC4D56" p={3} borderRadius={2} textAlign="center">
             <Typography sx={styles.top} variant="h5" gutterBottom>
               Your Top Tracks
             </Typography>
@@ -27,7 +27,7 @@ const SixMonthRecap = () => {
           </Box>
         </Grid>
         <Grid item xs={12} md={4}>
-          <Box bgcolor="rgb(94, 205, 128)" p={3} borderRadius={2} textAlign="center">
+          <Box bgcolor="#29B967" p={3} borderRadius={2} textAlign="center">
             <Typography sx={styles.top} variant="h5" gutterBottom>
               Your Top Artists
             </Typography>

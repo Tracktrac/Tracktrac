@@ -110,7 +110,7 @@ function UploadHistory() {
           alignItems: 'center' // Asegura que los elementos estén alineados al centro
         }}>
           <p style={{ margin: 0, lineHeight: 1.5 }}>{`${label}`}</p>
-          <p style={{ margin: 0, lineHeight: 1.5 }}>{`${(data.count / 1000).toFixed(1)}k reproducciones`}</p> {/* Formato con 'k' */}
+          <p style={{ margin: 0, lineHeight: 1.5 }}>{`${(data.count / 1000).toFixed(1)}k streams`}</p> {/* Formato con 'k' */}
         </div>
       );
     }
@@ -138,7 +138,7 @@ function UploadHistory() {
               component="label"
               sx={styles.uploadButton}
             >
-              Subir Archivos JSON
+              Upload JSON files
               <input
                 type="file"
                 accept=".json"
@@ -153,7 +153,7 @@ function UploadHistory() {
           <Card sx={styles.uploadedCard}>
             <CardHeader
               // sx={styles.uploadedCardTitle}
-              title={`${uploadedFilesInfo.length} Archivos Subidos`} // Usando template string
+              title={`${uploadedFilesInfo.length} files uploaded`} // Usando template string
             />
             <CardContent sx={styles.uploadedContent}>
               <List>
@@ -176,30 +176,30 @@ function UploadHistory() {
         {/* <Grid container spacing={4}>
           <Grid item xs={12} md={6}> */}
             <Card sx={styles.listenedCard}>
-              <CardHeader title="Totales de Escucha" />
+              <CardHeader title="You listened" />
               <CardContent>
                 <Card sx={styles.listenedCardItem}>
                   <CardContent sx={styles.listenedCardContent}>
                     <HeadphonesIcon sx={styles.listenedIcon} />
-                    <Typography sx={styles.listenedText}>{totalPlays} reproducciones</Typography>
+                    <Typography sx={styles.listenedText}>{totalPlays} streams</Typography>
                   </CardContent>
                 </Card>
                 <Card sx={styles.listenedCardItem}>
                   <CardContent sx={styles.listenedCardContent}>
                     <HeadphonesIcon sx={styles.listenedIcon} />
-                    <Typography sx={styles.listenedText}>{totalMinutes} minutos escuchados</Typography>
+                    <Typography sx={styles.listenedText}>{totalMinutes} minutes</Typography>
                   </CardContent>
                 </Card>
                 <Card sx={styles.listenedCardItem}>
                   <CardContent sx={styles.listenedCardContent}>
                     <HeadphonesIcon sx={styles.listenedIcon} />
-                    <Typography sx={styles.listenedText}>{totalHours} horas escuchadas</Typography>
+                    <Typography sx={styles.listenedText}>{totalHours} hours</Typography>
                   </CardContent>
                 </Card>
                 <Card sx={styles.listenedCardItem}>
                   <CardContent sx={styles.listenedCardContent}>
                     <HeadphonesIcon sx={styles.listenedIcon} />
-                    <Typography sx={styles.listenedText}>{totalDays} días escuchados</Typography>
+                    <Typography sx={styles.listenedText}>{totalDays} days</Typography>
                   </CardContent>
                 </Card>
               </CardContent>
@@ -209,7 +209,7 @@ function UploadHistory() {
   {/* GRAFICO REPRODUCCIONES POR AÑO */}
           {/* <Grid item xs={12} md={6}> */}
           <Card sx={styles.chartCard}>
-            <CardHeader title="Gráfico: Reproducciones por Año" />
+            <CardHeader title="Streams per Year" />
             <CardContent sx={styles.chartContainer}>
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={yearlyData}>
@@ -230,7 +230,7 @@ function UploadHistory() {
         <Grid item xs={12} md={4}>
           {/* <Grid item xs={12} md={6}> */}
             <Card sx={styles.card}>
-              <CardHeader title="Canciones Más Escuchadas" />
+              <CardHeader title="Most listened Songs" />
               <CardContent>
                 {topSongs.length > 0 ? (
                   <List sx={styles.list}>
@@ -238,14 +238,14 @@ function UploadHistory() {
                       <ListItem key={`song-${index}`} sx={styles.listItem}>
                         <ListItemText
                           primary={`${index + 1}. ${song}`}
-                          secondary={`${count} reproducciones`}
+                          secondary={`${count} streams`}
                           sx={styles.listItemText}
                         />
                       </ListItem>
                     ))}
                   </List>
                 ) : (
-                  <Typography sx={styles.typography}>No hay datos disponibles</Typography>
+                  <Typography sx={styles.typography}>No data available</Typography>
                 )}
               </CardContent>
             </Card>
@@ -256,7 +256,7 @@ function UploadHistory() {
   <Grid item xs={12} md={4}>
           {/* <Grid item xs={12} md={6}> */}
             <Card sx={styles.card}>
-              <CardHeader title="Artistas Más Escuchados" />
+              <CardHeader title="Most listened Artists" />
               <CardContent>
                 {topArtists.length > 0 ? (
                   <List sx={styles.list}>
@@ -264,14 +264,14 @@ function UploadHistory() {
                       <ListItem key={`artist-${index}`} sx={styles.listItem}>
                         <ListItemText
                           primary={`${index + 1}. ${artist}`}
-                          secondary={`${count} reproducciones`}
+                          secondary={`${count} streams`}
                           sx={styles.listItemText}
                         />
                       </ListItem>
                     ))}
                   </List>
                 ) : (
-                  <Typography sx={styles.typography}>No hay datos disponibles</Typography>
+                  <Typography sx={styles.typography}>No data available</Typography>
                 )}
               </CardContent>
             </Card>
