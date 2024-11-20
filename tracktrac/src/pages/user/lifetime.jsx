@@ -14,14 +14,15 @@ import {
   List,
   ListItem,
   ListItemText,
+  IconButton,
 } from '@mui/material';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
+import { FileCopy } from '@mui/icons-material'; 
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 function UploadHistory() {
   const { uploadedData, uploadedFilesInfo, errorMessage, handleFilesUpload } = useDataContext();
   const [topSongs, setTopSongs] = useState([]);
-  //const [topAlbums, setTopAlbums] = useState([]);
   const [topArtists, setTopArtists] = useState([]);
   const [totalPlays, setTotalPlays] = useState(0);
   const [totalMinutes, setTotalMinutes] = useState(0);
@@ -59,21 +60,17 @@ function UploadHistory() {
 
   const processTopSongs = (data) => {
     const songCounts = {};
-    //const albumCounts = {};
     const artistCounts = {};
 
     data.forEach((item) => {
       const trackName = item.master_metadata_track_name;
-      //const albumName = item.master_metadata_album_album_name;
       const artistName = item.master_metadata_album_artist_name;
 
       if (trackName) songCounts[trackName] = (songCounts[trackName] || 0) + 1;
-      //if (albumName) albumCounts[albumName] = (albumCounts[albumName] || 0) + 1;
       if (artistName) artistCounts[artistName] = (artistCounts[artistName] || 0) + 1;
     });
 
     setTopSongs(Object.entries(songCounts).sort((a, b) => b[1] - a[1]).slice(0, 10));
-    //setTopAlbums(Object.entries(albumCounts).sort((a, b) => b[1] - a[1]).slice(0, 10));
     setTopArtists(Object.entries(artistCounts).sort((a, b) => b[1] - a[1]).slice(0, 10));
   };
 
@@ -98,18 +95,19 @@ function UploadHistory() {
   };
 
   return (
-    <Container maxWidth="lg" sx={{ paddingY: 4 }}>
-      <Typography variant="h3" gutterBottom align="center">
+    <Container maxWidth="lg" sx={styles.container}>
+      <Typography variant="h3" gutterBottom sx={styles.title}>
         Spotify Listening Recap
       </Typography>
 
+    {/* SUBIR ARCHIVOS */}
       {uploadedFilesInfo.length === 0 ? (
-        <Box textAlign="center" marginBottom={4}>
+        <Box textAlign="center">
           <Button
             variant="contained"
             startIcon={<UploadFileIcon />}
             component="label"
-            sx={{ padding: 2 }}
+            sx={styles.uploadButton}
           >
             Subir Archivos JSON
             <input
@@ -122,40 +120,55 @@ function UploadHistory() {
           </Button>
         </Box>
       ) : (
-        <Card sx={{ marginBottom: 4 }}>
-          <CardHeader title="Archivos Subidos" />
+      // ARCHIVOS SUBIDOS
+        <Card sx={styles.uploadedCard}>
+          <CardHeader
+            sx={styles.uploadedCardTitle}
+            title={`${uploadedFilesInfo.length} Archivos Subidos`} // Usando template string
+          />
           <CardContent>
             <List>
               {uploadedFilesInfo.map((fileName, index) => (
-                <ListItem key={index}>
-                  <ListItemText primary={fileName} />
-                </ListItem>
+                <Card sx={styles.filesCard}>
+                  <CardContent sx={styles.filesCardContent}>
+                    <FileCopy sx={{ color: '#7275C7' }}/>
+                    <Typography variant="body1" sx={styles.fileName}>
+                      {fileName}
+                    </Typography>
+                  </CardContent>
+                </Card>
+                // <ListItem key={index} sx={styles.listItem}>
+                //   <ListItemText
+                //     primary={fileName}
+                //     sx={styles.listItemText}
+                //   />
+                // </ListItem>
               ))}
             </List>
           </CardContent>
-          <CardActions>
-            <Typography>Total de archivos: {uploadedFilesInfo.length}</Typography>
-          </CardActions>
         </Card>
       )}
 
+    {/* TOTALES DE ESCUCHA */}
       <Grid container spacing={4}>
         <Grid item xs={12} md={6}>
-          <Card>
+          <Card sx={styles.card}>
             <CardHeader title="Totales de Escucha" />
             <CardContent>
-              <Typography>Total de Reproducciones: {totalPlays}</Typography>
-              <Typography>Total de Minutos Escuchados: {totalMinutes} minutos</Typography>
-              <Typography>Total de Horas Escuchadas: {totalHours} horas</Typography>
-              <Typography>Total de Días Escuchados: {totalDays} días</Typography>
+              <Typography sx={styles.typography}>Total de Reproducciones: {totalPlays}</Typography>
+              <Typography sx={styles.typography}>Total de Minutos Escuchados: {totalMinutes} minutos</Typography>
+              <Typography sx={styles.typography}>Total de Horas Escuchadas: {totalHours} horas</Typography>
+              <Typography sx={styles.typography}>Total de Días Escuchados: {totalDays} días</Typography>
             </CardContent>
           </Card>
         </Grid>
+
+      {/* REPRODUCCIONES POR AÑO GRAFICO */}
         <Grid item xs={12} md={6}>
-          <Card>
+          <Card sx={styles.card}>
             <CardHeader title="Gráfico: Reproducciones por Año" />
-            <CardContent>
-              <ResponsiveContainer width="100%" height={300}>
+            <CardContent sx={styles.chartContainer}>
+              <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={yearlyData}>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="year" />
@@ -167,46 +180,59 @@ function UploadHistory() {
             </CardContent>
           </Card>
         </Grid>
+
+        {/* CANCIONES MAS ESCUCHADAS */}
         <Grid item xs={12} md={6}>
-          <Card>
+          <Card sx={styles.card}>
             <CardHeader title="Canciones Más Escuchadas" />
             <CardContent>
               {topSongs.length > 0 ? (
-                <List>
+                <List sx={styles.list}>
                   {topSongs.map(([song, count], index) => (
-                    <ListItem key={`song-${index}`}>
-                      <ListItemText primary={`${index + 1}. ${song}`} secondary={`${count} reproducciones`} />
+                    <ListItem key={`song-${index}`} sx={styles.listItem}>
+                      <ListItemText
+                        primary={`${index + 1}. ${song}`}
+                        secondary={`${count} reproducciones`}
+                        sx={styles.listItemText}
+                      />
                     </ListItem>
                   ))}
                 </List>
               ) : (
-                <Typography>No hay datos disponibles</Typography>
+                <Typography sx={styles.typography}>No hay datos disponibles</Typography>
               )}
             </CardContent>
           </Card>
         </Grid>
+
+        {/* ARTISTAS MAS ESCUCHADOS */}
         <Grid item xs={12} md={6}>
-          <Card>
+          <Card sx={styles.card}>
             <CardHeader title="Artistas Más Escuchados" />
             <CardContent>
               {topArtists.length > 0 ? (
-                <List>
+                <List sx={styles.list}>
                   {topArtists.map(([artist, count], index) => (
-                    <ListItem key={`artist-${index}`}>
-                      <ListItemText primary={`${index + 1}. ${artist}`} secondary={`${count} reproducciones`} />
+                    <ListItem key={`artist-${index}`} sx={styles.listItem}>
+                      <ListItemText
+                        primary={`${index + 1}. ${artist}`}
+                        secondary={`${count} reproducciones`}
+                        sx={styles.listItemText}
+                      />
                     </ListItem>
                   ))}
                 </List>
               ) : (
-                <Typography>No hay datos disponibles</Typography>
+                <Typography sx={styles.typography}>No hay datos disponibles</Typography>
               )}
             </CardContent>
           </Card>
         </Grid>
       </Grid>
-
+    
+    {/* ERROR */}
       {errorMessage && (
-        <Box marginTop={4}>
+        <Box sx={styles.errorBox}>
           <Typography color="error" variant="body1" align="center">
             {errorMessage}
           </Typography>
@@ -215,5 +241,101 @@ function UploadHistory() {
     </Container>
   );
 }
+
+const styles = {
+  container: {
+    paddingY: 4,
+  },
+  title: {
+    textAlign: 'center',
+    marginBottom: 4,
+    fontWeight: 'bold',
+  },
+  uploadButton: {
+    paddingX: 4,
+    paddingY: 2,
+    backgroundColor: '#06b6d4',
+    color: '#fff',
+    ':hover': {
+      backgroundColor: '#0891b2',
+    },
+  },
+  // ARCHIVOS SUBIDOS
+  uploadedCard: {
+    marginBottom: 3,
+    boxShadow: 3,
+    borderRadius: 10,
+    padding: 2,
+    backgroundColor: '#0F0A33',
+  },
+  uploadedCardTitle:{
+    marginLeft: 2,
+    marginBottom: -2,
+  },
+  filesCard: {
+    borderRadius: 5,
+    marginBottom: 1,
+    backgroundColor: '#19114C',
+  },
+  filesCardContent: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: 2,
+  },
+  fileName:{
+    // fontSize: '1rem',
+    color: '#7275C7',
+    // fontWeight: 'bold',
+    marginLeft: 1,
+  },
+  card: {
+    boxShadow: 3,
+    borderRadius: 10,
+    padding: 2,
+  },
+  cardActions: {
+    // total de archivos
+    padding: 2,
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  typography: {
+    fontSize: '1rem',
+    marginBottom: 1,
+    fontFamily: 'Host Grotesk, sans-serif',
+  },
+  list: {
+    padding: 0,
+    marginTop: 2,
+  },
+  listItem: {
+    padding: 1,
+    borderBottom: '1px solid #e5e7eb',
+  },
+  listItemText: {
+    primaryTypographyProps: {
+      fontSize: '1rem',
+      fontWeight: 'bold',
+      fontFamily: 'Host Grotesk, sans-serif',
+    },
+    secondaryTypographyProps: {
+      fontSize: '0.875rem',
+      color: '#6b7280',
+      fontFamily: 'Host Grotesk, sans-serif',
+    },
+  },
+  errorBox: {
+    marginTop: 4,
+    padding: 2,
+    backgroundColor: '#fee2e2',
+    borderRadius: 2,
+    border: '1px solid #fca5a5',
+  },
+  chartContainer: {
+    height: 300,
+    marginTop: 2,
+    marginBottom: 2,
+  },
+};
 
 export default UploadHistory;

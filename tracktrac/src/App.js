@@ -22,6 +22,18 @@ const theme = createTheme({
       default: '#080920',
     },
   },
+  typography: {
+    fontFamily: '"Host Grotesk", sans-serif',
+    h3: {
+      fontFamily: '"Host Grotesk", sans-serif',
+    },
+    body1: {
+      fontFamily: '"Host Grotesk", sans-serif',
+    },
+    button: {
+      fontFamily: '"Host Grotesk", sans-serif',
+    },
+  },
 });
 
 function App() {
