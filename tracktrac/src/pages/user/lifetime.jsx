@@ -10,13 +10,12 @@ import {
   Card,
   CardContent,
   CardHeader,
-  CardActions,
   List,
   ListItem,
   ListItemText,
-  IconButton,
 } from '@mui/material';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
+import HeadphonesIcon from '@mui/icons-material/Headphones';
 import { FileCopy } from '@mui/icons-material'; 
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
@@ -53,9 +52,9 @@ function UploadHistory() {
     const days = hours / 24; // Convert hours to days
 
     setTotalPlays(plays);
-    setTotalMinutes(minutes.toFixed(2));
-    setTotalHours(hours.toFixed(2));
-    setTotalDays(days.toFixed(2));
+    setTotalMinutes(minutes.toFixed(1));
+    setTotalHours(hours.toFixed(1));
+    setTotalDays(days.toFixed(1));
   };
 
   const processTopSongs = (data) => {
@@ -100,7 +99,7 @@ function UploadHistory() {
         Spotify Listening Recap
       </Typography>
 
-    {/* SUBIR ARCHIVOS */}
+{/* SUBIR ARCHIVOS */}
       {uploadedFilesInfo.length === 0 ? (
         <Box textAlign="center">
           <Button
@@ -120,7 +119,7 @@ function UploadHistory() {
           </Button>
         </Box>
       ) : (
-      // ARCHIVOS SUBIDOS
+// ARCHIVOS SUBIDOS
         <Card sx={styles.uploadedCard}>
           <CardHeader
             sx={styles.uploadedCardTitle}
@@ -137,33 +136,47 @@ function UploadHistory() {
                     </Typography>
                   </CardContent>
                 </Card>
-                // <ListItem key={index} sx={styles.listItem}>
-                //   <ListItemText
-                //     primary={fileName}
-                //     sx={styles.listItemText}
-                //   />
-                // </ListItem>
               ))}
             </List>
           </CardContent>
         </Card>
       )}
 
-    {/* TOTALES DE ESCUCHA */}
+{/* TOTALES DE ESCUCHA */}
       <Grid container spacing={4}>
         <Grid item xs={12} md={6}>
-          <Card sx={styles.card}>
+          <Card sx={styles.listenedCard}>
             <CardHeader title="Totales de Escucha" />
             <CardContent>
-              <Typography sx={styles.typography}>Total de Reproducciones: {totalPlays}</Typography>
-              <Typography sx={styles.typography}>Total de Minutos Escuchados: {totalMinutes} minutos</Typography>
-              <Typography sx={styles.typography}>Total de Horas Escuchadas: {totalHours} horas</Typography>
-              <Typography sx={styles.typography}>Total de Días Escuchados: {totalDays} días</Typography>
+              <Card sx={styles.listenedCardItem}>
+                <CardContent sx={styles.listenedCardContent}>
+                  <HeadphonesIcon sx={styles.listenedIcon} />
+                  <Typography sx={styles.listenedText}>{totalPlays} reproducciones</Typography>
+                </CardContent>
+              </Card>
+              <Card sx={styles.listenedCardItem}>
+                <CardContent sx={styles.listenedCardContent}>
+                  <HeadphonesIcon sx={styles.listenedIcon} />
+                  <Typography sx={styles.listenedText}>{totalMinutes} minutos escuchados</Typography>
+                </CardContent>
+              </Card>
+              <Card sx={styles.listenedCardItem}>
+                <CardContent sx={styles.listenedCardContent}>
+                  <HeadphonesIcon sx={styles.listenedIcon} />
+                  <Typography sx={styles.listenedText}>{totalHours} horas escuchadas</Typography>
+                </CardContent>
+              </Card>
+              <Card sx={styles.listenedCardItem}>
+                <CardContent sx={styles.listenedCardContent}>
+                  <HeadphonesIcon sx={styles.listenedIcon} />
+                  <Typography sx={styles.listenedText}>{totalDays} días escuchados</Typography>
+                </CardContent>
+              </Card>
             </CardContent>
           </Card>
         </Grid>
 
-      {/* REPRODUCCIONES POR AÑO GRAFICO */}
+{/* REPRODUCCIONES POR AÑO GRAFICO */}
         <Grid item xs={12} md={6}>
           <Card sx={styles.card}>
             <CardHeader title="Gráfico: Reproducciones por Año" />
@@ -181,7 +194,7 @@ function UploadHistory() {
           </Card>
         </Grid>
 
-        {/* CANCIONES MAS ESCUCHADAS */}
+{/* CANCIONES MAS ESCUCHADAS */}
         <Grid item xs={12} md={6}>
           <Card sx={styles.card}>
             <CardHeader title="Canciones Más Escuchadas" />
@@ -205,7 +218,7 @@ function UploadHistory() {
           </Card>
         </Grid>
 
-        {/* ARTISTAS MAS ESCUCHADOS */}
+{/* ARTISTAS MAS ESCUCHADOS */}
         <Grid item xs={12} md={6}>
           <Card sx={styles.card}>
             <CardHeader title="Artistas Más Escuchados" />
@@ -230,7 +243,7 @@ function UploadHistory() {
         </Grid>
       </Grid>
     
-    {/* ERROR */}
+{/* ERROR */}
       {errorMessage && (
         <Box sx={styles.errorBox}>
           <Typography color="error" variant="body1" align="center">
@@ -288,6 +301,38 @@ const styles = {
     // fontWeight: 'bold',
     marginLeft: 1,
   },
+
+  //TOTALES DE ESCUCHA listenedText
+  listenedCard: {
+    boxShadow: 3,
+    borderRadius: 10,
+    padding: 2,
+    backgroundColor: '#DC4D56',
+  },
+  listenedText: {
+    fontSize: 18,
+    marginBottom: 1,
+    marginTop: 1,
+    fontFamily: 'Host Grotesk, sans-serif',
+    color: '#F5868D',
+  },
+  listenedCardItem: {
+    marginBottom: 1,
+    // boxShadow: 2,
+    borderRadius: 6,
+    backgroundColor: '#C02F39',
+    // height: 80,
+  },
+  listenedCardContent: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  listenedIcon: {
+    marginRight: 2,
+    marginLeft: 1,
+    color: '#F5868D',
+  },
+
   card: {
     boxShadow: 3,
     borderRadius: 10,
