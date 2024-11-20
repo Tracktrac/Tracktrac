@@ -32,7 +32,7 @@ const Home = () => {
       {/* Contenido principal */}
       <Grid container spacing={4}>
         {/* Columna Izquierda - Perfil */}
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={3}>
           <Box sx={{ position: 'relative', mt: 5 }}>
             {/* Avatar superpuesto */}
             <Avatar
@@ -59,15 +59,15 @@ const Home = () => {
                 </Typography>
                 <Box sx={{ mt: 2 }}>
                   <Box sx={{ textAlign: 'center', mt: 2 }}>
-                    <Typography variant="h3" sx={{ marginTop:4, fontWeight: 'bold', color: 'white', fontSize: '1.5rem', }}>
+                    <Typography variant="h3" sx={{ marginTop:4, fontWeight: 'bold', color: 'white', fontSize: '1.2rem', }}>
                       {profileData.followers?.total}
                     </Typography>
-                    <Typography variant="body1" sx={{ marginBottom:3, fontSize: '1rem', color: 'white' }}>
+                    <Typography variant="body1" sx={{ marginBottom:3, fontSize: 14, color: 'white' }}>
                       Followers
                     </Typography>
                   </Box>
-                  <Typography variant="body1" align="center"><strong>Country:</strong> {profileData.country}</Typography>
-                  <Typography variant="body1" align="center">
+                  <Typography sx={{fontSize: 14}} variant="body1" align="center"><strong>Country:</strong> {profileData.country}</Typography>
+                  <Typography sx={{fontSize: 14}} variant="body1" align="center">
                     <strong>Spotify URL:</strong>{' '}
                     <Link
                       href={profileData.external_urls?.spotify}
@@ -97,7 +97,7 @@ const Home = () => {
 
 
         {/* Columna Derecha - Pistas Reproducidas Recientemente */}
-        <Grid item xs={12} md={8}>
+        <Grid item xs={12} md={9}>
           <Card sx={styles.recentTracksCard}>
             <Box sx={styles.recentTracksHeader}>
               <LibraryMusic sx={styles.libraryMusicIcon} />
@@ -141,8 +141,8 @@ const styles = {
     overflow: 'hidden', // Asegura que no se desborde contenido del banner
   },
   profileAvatar: {
-    width: 200,
-    height: 200,
+    width: 150,
+    height: 150,
     position: 'absolute',
     top: '-80px', // La mitad del tamaño del avatar para superponer
     left: '50%',
@@ -152,7 +152,7 @@ const styles = {
   verticalCard: {
     mt: 30,
     p: 3,
-    pt: 15, // Espacio para la superposición del avatar
+    pt: 9, // Espacio para la superposición del avatar
     borderRadius: 3,
     textAlign: 'center',
     backgroundColor: '#E14C38',
@@ -163,11 +163,11 @@ const styles = {
     color: 'white',
   },
   product: {
-    fontSize: 16,
+    fontSize: 14,
     color: 'white',
   },
   email: {
-    fontSize: 16,
+    fontSize: 14,
     color: 'rgb(255,255,255,0.5)',
   },
   cardActions: {
@@ -203,8 +203,9 @@ const styles = {
   recentTracksCard: {
     p: 3,
     marginTop: 5,
+    marginBottom: 5,
     borderRadius: 3,
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   recentTracksHeader: {
     display: 'flex',

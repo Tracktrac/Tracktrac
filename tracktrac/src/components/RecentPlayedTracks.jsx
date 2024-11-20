@@ -9,8 +9,8 @@ const RecentPlayedTracks = ({ tracks = [] }) => {
   useEffect(() => {
     // Función para calcular la altura disponible
     const updateHeight = () => {
-      const headerHeight = 64; // Ajusta esto según la altura de tu header o cualquier otro elemento superior
-      const footerHeight = 64; // Ajusta esto si tienes algún footer o margen adicional
+      const headerHeight = 150; // Ajusta según tus necesidades
+      const footerHeight = 150; // Ajusta según tus necesidades
       const availableHeight = window.innerHeight - headerHeight - footerHeight;
       setListHeight(availableHeight);
     };
@@ -34,7 +34,7 @@ const RecentPlayedTracks = ({ tracks = [] }) => {
             <img
             src={track.album.images[0]?.url}
             alt={track.album.name}
-            style={{ width: 60, height: 60, borderRadius: '3px', marginRight: '15px' }}
+            style={{ width: 50, height: 50, borderRadius: '3px', marginRight: '15px' }}
           />
         </ListItemAvatar>
         <ListItemText
