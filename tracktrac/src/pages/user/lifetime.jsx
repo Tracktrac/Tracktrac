@@ -229,7 +229,7 @@ function UploadHistory() {
   {/* SEGUNDA COLUMNA */}
         <Grid item xs={12} md={4}>
           {/* <Grid item xs={12} md={6}> */}
-            <Card sx={styles.card}>
+            <Card sx={styles.songsCard}>
               <CardHeader title="Most listened Songs" />
               <CardContent>
                 {topSongs.length > 0 ? (
@@ -255,7 +255,7 @@ function UploadHistory() {
   {/* TERCERA COLUMNA */}
   <Grid item xs={12} md={4}>
           {/* <Grid item xs={12} md={6}> */}
-            <Card sx={styles.card}>
+            <Card sx={styles.artistCard}>
               <CardHeader title="Most listened Artists" />
               <CardContent>
                 {topArtists.length > 0 ? (
@@ -392,11 +392,23 @@ const styles = {
     height: 300,
     marginTop: 2,
   },
-  card: {
+
+  //SONGS
+  songsCard: {
     boxShadow: 3,
     borderRadius: 10,
     padding: 2,
+    backgroundColor: '#E86940',
   },
+
+  //ARTIST
+  artistCard: {
+    boxShadow: 3,
+    borderRadius: 10,
+    padding: 2,
+    backgroundColor: '#CB399F',
+  },
+
   cardActions: {
     // total de archivos
     padding: 2,
