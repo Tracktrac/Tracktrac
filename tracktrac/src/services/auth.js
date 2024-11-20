@@ -7,7 +7,7 @@ export async function redirectToAuthCodeFlow(clientId) {
     const params = new URLSearchParams({
         client_id: clientId,
         response_type: "code",
-        redirect_uri: "https://tracktrac.onrender.com/callback",
+        redirect_uri: "http://localhost:3000/callback",
         scope: "user-read-private user-read-email user-top-read user-read-recently-played", // Agregamos user-top-read y user-read-recently-played
         code_challenge_method: "S256",
         code_challenge: challenge,
@@ -23,7 +23,7 @@ export async function getAccessToken(clientId, code) {
         client_id: clientId,
         grant_type: "authorization_code",
         code: code,
-        redirect_uri: "https://tracktrac.onrender.com/callback",
+        redirect_uri: "http://localhost:3000/callback",
         code_verifier: verifier,
     });
 

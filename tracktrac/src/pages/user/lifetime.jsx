@@ -160,7 +160,7 @@ function UploadHistory() {
                 {uploadedFilesInfo.map((fileName, index) => (
                   <Card sx={styles.filesCard}>
                     <CardContent sx={styles.filesCardContent}>
-                      <FileCopy sx={{ color: '#7275C7' }}/>
+                      <FileCopy sx={{ color: '#7275C7', fontSize: 13, marginLeft: 1, }}/>
                       <Typography sx={styles.fileName}>
                         {fileName}
                       </Typography>
@@ -331,15 +331,14 @@ const styles = {
     paddingTop:0
   },
   filesCard: {
-    borderRadius: 4, // Reducido de 5 a 4
+    borderRadius: 3, // Reducido de 5 a 3
     marginBottom: 0.8, // Reducido de 1 a 0.8
     backgroundColor: '#19114C',
   },
   filesCardContent: {
     display: 'flex',
     alignItems: 'center',
-    paddingBottom:0,
-    padding: 2,
+    // padding: 2,
   },
   fileName:{
     color: '#7275C7',
@@ -369,16 +368,16 @@ const styles = {
     // boxShadow: 2,
     borderRadius: 4,
     backgroundColor: '#C02F39',
-    height: '3.5rem',
   },
   listenedCardContent: {
     display: 'flex',
     alignItems: 'center',
   },
   listenedIcon: {
-    marginRight: 2,
+    marginRight: 1,
     marginLeft: 1,
     color: '#FDA5AB',
+    fontSize: 15,
   },
 
   //GRAFICO chartCard
@@ -386,9 +385,13 @@ const styles = {
     boxShadow: 3,
     borderRadius: 10,
     padding: 2,
+    paddingBottom:0,
     backgroundColor: '#29B967',
   },
-
+  chartContainer: {
+    height: 300,
+    marginTop: 2,
+  },
   card: {
     boxShadow: 3,
     borderRadius: 10,
@@ -432,10 +435,7 @@ const styles = {
     borderRadius: 2,
     border: '1px solid #fca5a5',
   },
-  chartContainer: {
-    height: 300,
-    marginTop: 2,
-  },
+  
 };
 
 export default UploadHistory;

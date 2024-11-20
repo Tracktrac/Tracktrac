@@ -35,13 +35,33 @@ const theme = createTheme({
     },
   },
   components: {
+    // MuiPaper: {
+    //   styleOverrides: {
+    //     root: {
+    //       marginBottom: 0,
+    //     },
+    //   },
+    // },
     MuiCardHeader: {
       styleOverrides: {
         title: {
-          fontSize: '1.2rem !important',// Cambia el tamaño de la fuente del CardHeader
+          fontSize: '1.2rem !important',
         },
         root: {
           paddingBottom: 0,
+        },
+      },
+    },
+    MuiCardContent: {
+      styleOverrides: {
+        root: {
+          padding: 0,
+          paddingBottom: 0,
+          '&:last-child': {
+            // paddingBottom: 2,
+            // paddingTop: 2,
+            padding: '8px 8px',
+          },
         },
       },
     },
