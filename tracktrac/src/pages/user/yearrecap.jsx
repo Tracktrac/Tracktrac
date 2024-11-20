@@ -13,7 +13,7 @@ const YearRecap = () => {
   const { topAlbums } = useTopAlbums('long_term');
 
   return (
-    <Container maxWidth="lg" sx={{ paddingTop: 4 }}>
+    <Container maxWidth="xl" sx={{ paddingTop: 4 }}>
       <Typography sx={styles.title} variant="h3" gutterBottom>
         Year Recap
       </Typography>

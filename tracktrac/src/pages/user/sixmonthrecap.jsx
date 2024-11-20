@@ -13,7 +13,7 @@ const SixMonthRecap = () => {
   const { topAlbums } = useTopAlbums('medium_term');
 
   return (
-    <Container maxWidth="lg" sx={{ paddingTop: 4 }}>
+    <Container maxWidth="xl" sx={{ paddingTop: 4 }}>
       <Typography sx={styles.title} variant="h3" gutterBottom>
         6 Month Recap
       </Typography>
