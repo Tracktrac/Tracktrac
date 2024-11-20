@@ -122,6 +122,7 @@ const styles = {
     top: 0, // Ubica el banner en la parte superior de la página
     left: 0, // Ajuste a la izquierda
     width: '100vw',
+    // height: '100vw',
     height: '400px',
     display: 'flex',
     justifyContent: 'center',
@@ -135,7 +136,8 @@ const styles = {
     height: '100%',
     borderRadius: 0, // Rectángulo sin bordes redondeados
     objectFit: 'cover',
-    filter: 'blur(8px)', // Efecto de desenfoque
+    // filter: 'blur(8px)', // Efecto de desenfoque
+    filter: 'blur(15px)', // Efecto de desenfoque
     overflow: 'hidden', // Asegura que no se desborde contenido del banner
   },
   profileAvatar: {
