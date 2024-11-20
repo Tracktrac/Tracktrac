@@ -20,29 +20,21 @@ const MonthRecap = () => {
 
   return (
     <Container maxWidth="lg" sx={{ paddingTop: 4 }}>
-      <Typography variant="h3" gutterBottom>
+      <Typography sx={styles.title} variant="h3" gutterBottom>
         Month Recap
       </Typography>
       <Grid container spacing={4}>
         <Grid item xs={12} md={4}>
           <Box bgcolor="rgb(205, 94, 94)" p={3} borderRadius={2} textAlign="center">
-            <Typography variant="h5" gutterBottom>
+            <Typography sx={styles.top} variant="h5" gutterBottom>
               Your Top Tracks
             </Typography>
             <Top5Tracks tracks={topTracks} />
-            {/* <Button 
-              variant="contained" 
-              color="secondary" 
-              onClick={handleSeeMoreClick}
-              sx={{ mt: 2 }}
-            >
-              See More
-            </Button> */}
           </Box>
         </Grid>
         <Grid item xs={12} md={4}>
           <Box bgcolor="rgb(94, 205, 128)" p={3} borderRadius={2} textAlign="center">
-            <Typography variant="h5" gutterBottom>
+            <Typography sx={styles.top} variant="h5" gutterBottom>
               Your Top Artists
             </Typography>
             <Top5Artists artists={topArtists} />
@@ -50,7 +42,7 @@ const MonthRecap = () => {
         </Grid>
         <Grid item xs={12} md={4}>
           <Box bgcolor="rgb(94, 94, 205)" p={3} borderRadius={2} textAlign="center">
-            <Typography variant="h5" gutterBottom>
+            <Typography sx={styles.top} variant="h5" gutterBottom>
               Your Top Albums
             </Typography>
             <Top5Albums albums={topAlbums} />
@@ -60,5 +52,18 @@ const MonthRecap = () => {
     </Container>
   );
 };
-
+const styles = {
+  title: {
+    textAlign: 'center',
+    marginBottom: 4,
+    fontWeight: 'bold',
+    fontSize: '2rem',
+  },
+  top: {
+    textAlign: 'center',
+    marginBottom: 4,
+    fontWeight: 'bold',
+    fontSize: '1.3rem',
+  },
+};
 export default MonthRecap;
