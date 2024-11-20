@@ -103,7 +103,7 @@ function UploadHistory() {
           color: 'white', // Texto blanco
           padding: '15px',
           borderRadius: 16,
-          fontSize: 18,
+          fontSize: '0.8rem',
           textAlign: 'center', // Centrar el texto
           display: 'flex',
           flexDirection: 'column', // Asegura que los párrafos estén uno encima del otro
@@ -435,7 +435,6 @@ const styles = {
   chartContainer: {
     height: 300,
     marginTop: 2,
-    marginBottom: 2,
   },
 };
 
