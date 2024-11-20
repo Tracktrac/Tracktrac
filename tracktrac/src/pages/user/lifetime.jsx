@@ -18,6 +18,8 @@ import UploadFileIcon from '@mui/icons-material/UploadFile';
 import HeadphonesIcon from '@mui/icons-material/Headphones';
 import { FileCopy } from '@mui/icons-material'; 
 import { LineChart, Area, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import MostListenedSongs from '../../components/topsongs';
+import MostListenedArtists from '../../components/topartists';
 
 function UploadHistory() {
   const { uploadedData, uploadedFilesInfo, errorMessage, handleFilesUpload } = useDataContext();
@@ -129,7 +131,7 @@ function UploadHistory() {
         {/* PRIMERA COLUMNA */}
         <Grid item xs={12} md={4}>
 
-  {/* SUBIR ARCHIVOS */}
+{/* SUBIR ARCHIVOS */}
         {uploadedFilesInfo.length === 0 ? (
           <Box textAlign="center">
             <Button
@@ -152,7 +154,6 @@ function UploadHistory() {
   // ARCHIVOS SUBIDOS
           <Card sx={styles.uploadedCard}>
             <CardHeader
-              // sx={styles.uploadedCardTitle}
               title={`${uploadedFilesInfo.length} files uploaded`} // Usando template string
             />
             <CardContent sx={styles.uploadedContent}>
@@ -173,8 +174,6 @@ function UploadHistory() {
         )}
 
   {/* TOTALES DE ESCUCHA */}
-        {/* <Grid container spacing={4}>
-          <Grid item xs={12} md={6}> */}
             <Card sx={styles.listenedCard}>
               <CardHeader title="You listened" />
               <CardContent>
@@ -207,7 +206,6 @@ function UploadHistory() {
           {/* </Grid> */}
 
   {/* GRAFICO REPRODUCCIONES POR AÑO */}
-          {/* <Grid item xs={12} md={6}> */}
           <Card sx={styles.chartCard}>
             <CardHeader title="Streams per Year" />
             <CardContent sx={styles.chartContainer}>
@@ -228,25 +226,10 @@ function UploadHistory() {
   {/* CANCIONES MAS ESCUCHADAS */}
   {/* SEGUNDA COLUMNA */}
         <Grid item xs={12} md={4}>
-          {/* <Grid item xs={12} md={6}> */}
             <Card sx={styles.songsCard}>
               <CardHeader title="Most listened Songs" />
               <CardContent>
-                {topSongs.length > 0 ? (
-                  <List sx={styles.list}>
-                    {topSongs.map(([song, count], index) => (
-                      <ListItem key={`song-${index}`} sx={styles.listItem}>
-                        <ListItemText
-                          primary={`${index + 1}. ${song}`}
-                          secondary={`${count} streams`}
-                          sx={styles.listItemText}
-                        />
-                      </ListItem>
-                    ))}
-                  </List>
-                ) : (
-                  <Typography sx={styles.typography}>No data available</Typography>
-                )}
+                <MostListenedSongs songs={topSongs} />
               </CardContent>
             </Card>
           </Grid>
@@ -254,25 +237,10 @@ function UploadHistory() {
   {/* ARTISTAS MAS ESCUCHADOS */}
   {/* TERCERA COLUMNA */}
   <Grid item xs={12} md={4}>
-          {/* <Grid item xs={12} md={6}> */}
             <Card sx={styles.artistCard}>
               <CardHeader title="Most listened Artists" />
               <CardContent>
-                {topArtists.length > 0 ? (
-                  <List sx={styles.list}>
-                    {topArtists.map(([artist, count], index) => (
-                      <ListItem key={`artist-${index}`} sx={styles.listItem}>
-                        <ListItemText
-                          primary={`${index + 1}. ${artist}`}
-                          secondary={`${count} streams`}
-                          sx={styles.listItemText}
-                        />
-                      </ListItem>
-                    ))}
-                  </List>
-                ) : (
-                  <Typography sx={styles.typography}>No data available</Typography>
-                )}
+                <MostListenedArtists artists={topArtists} />
               </CardContent>
             </Card>
           </Grid>

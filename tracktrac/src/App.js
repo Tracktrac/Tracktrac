@@ -45,7 +45,9 @@ const theme = createTheme({
     MuiCardHeader: {
       styleOverrides: {
         title: {
-          fontSize: '1.2rem !important',
+          fontSize: '1.3rem !important',
+          fontWeight: 'bold',
+          textAlign: 'center',
         },
         root: {
           paddingBottom: 0,
