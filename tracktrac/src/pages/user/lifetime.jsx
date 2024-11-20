@@ -17,7 +17,7 @@ import {
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import HeadphonesIcon from '@mui/icons-material/Headphones';
 import { FileCopy } from '@mui/icons-material'; 
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { LineChart, Area, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 function UploadHistory() {
   const { uploadedData, uploadedFilesInfo, errorMessage, handleFilesUpload } = useDataContext();
@@ -91,6 +91,31 @@ function UploadHistory() {
     }));
 
     setYearlyData(formattedData.sort((a, b) => a.year - b.year));
+  };
+
+  //POPUP DEL GRAFICO
+  const CustomTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+      const data = payload[0].payload;  // Obtener los datos del gráfico
+      return (
+        <div style={{
+          backgroundColor: 'rgba(0, 0, 0, 0.6)', // Fondo oscuro
+          color: 'white', // Texto blanco
+          padding: '15px',
+          borderRadius: 16,
+          fontSize: 18,
+          textAlign: 'center', // Centrar el texto
+          display: 'flex',
+          flexDirection: 'column', // Asegura que los párrafos estén uno encima del otro
+          alignItems: 'center' // Asegura que los elementos estén alineados al centro
+        }}>
+          <p style={{ margin: 0, lineHeight: 1.5 }}>{`${label}`}</p>
+          <p style={{ margin: 0, lineHeight: 1.5 }}>{`${(data.count / 1000).toFixed(1)}k reproducciones`}</p> {/* Formato con 'k' */}
+        </div>
+      );
+    }
+  
+    return null;
   };
 
   return (
@@ -176,18 +201,19 @@ function UploadHistory() {
           </Card>
         </Grid>
 
-{/* REPRODUCCIONES POR AÑO GRAFICO */}
+{/* GRAFICO REPRODUCCIONES POR AÑO */}
         <Grid item xs={12} md={6}>
-          <Card sx={styles.card}>
+          <Card sx={styles.chartCard}>
             <CardHeader title="Gráfico: Reproducciones por Año" />
             <CardContent sx={styles.chartContainer}>
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={yearlyData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="year" />
-                  <YAxis />
-                  <Tooltip />
-                  <Line type="monotone" dataKey="count" stroke="#8884d8" />
+                  <CartesianGrid strokearray="3 3" vertical={false} />
+                  <XAxis axisLine={false} stroke="#fff" dataKey="year" />
+                  <YAxis axisLine={false} stroke="#fff" tickFormatter={(value) => `${(value / 1000).toFixed(1)}k`} />
+                  <Tooltip content={<CustomTooltip />} />
+                  <Area dataKey="count" stroke="#8884d8" fill="#fff" />
+                  <Line dot={{ fill: '#0E8943', stroke: '#0E8943', r: 3 }} type="monotone" dataKey="count" stroke="#0E8943" />
                 </LineChart>
               </ResponsiveContainer>
             </CardContent>
@@ -296,13 +322,11 @@ const styles = {
     padding: 2,
   },
   fileName:{
-    // fontSize: '1rem',
     color: '#7275C7',
-    // fontWeight: 'bold',
     marginLeft: 1,
   },
 
-  //TOTALES DE ESCUCHA listenedText
+  //TOTALES DE ESCUCHA
   listenedCard: {
     boxShadow: 3,
     borderRadius: 10,
@@ -314,7 +338,7 @@ const styles = {
     marginBottom: 1,
     marginTop: 1,
     fontFamily: 'Host Grotesk, sans-serif',
-    color: '#F5868D',
+    color: '#FDA5AB',
   },
   listenedCardItem: {
     marginBottom: 1,
@@ -330,7 +354,15 @@ const styles = {
   listenedIcon: {
     marginRight: 2,
     marginLeft: 1,
-    color: '#F5868D',
+    color: '#FDA5AB',
+  },
+
+  //GRAFICO chartCard
+  chartCard: {
+    boxShadow: 3,
+    borderRadius: 10,
+    padding: 2,
+    backgroundColor: '#29B967',
   },
 
   card: {
