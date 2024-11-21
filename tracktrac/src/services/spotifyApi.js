@@ -74,3 +74,62 @@ export const fetchTopArtists = async (timeRange = 'medium_term', limit = 5) => {
 
   return response.json();
 };
+
+export const playTrack = async (trackId) => {
+  const apiToken = getApiToken();
+  console.log("API TOKEN: ", apiToken);
+  if (!apiToken) {
+    console.error("No API token found. Please authorize the app with the required scopes.");
+    return;
+  }
+
+  try {
+    // 1. Obtener los dispositivos del usuario
+    const devicesResponse = await fetch(`${API_BASE_URL}/me/player/devices`, {
+      headers: { Authorization: `Bearer ${apiToken}` },
+    });
+
+    if (!devicesResponse.ok) {
+      const errorData = await devicesResponse.json();
+      console.error("Error fetching devices:", errorData);
+      throw new Error(`Failed to fetch devices: ${errorData.error.message}`);
+    }
+
+    const devices = await devicesResponse.json();
+    console.log("DEVICES: ", devices);
+
+    // 2. Identificar el dispositivo activo
+    const activeDevice = devices.devices.find((device) => device.is_active);
+    if (!activeDevice) {
+      console.error("No active device found. Please open Spotify on a device and try again.");
+      return;
+    }
+
+    console.log("Active Device ID:", activeDevice.id);
+    console.log("Active Device Details:", activeDevice);
+
+    console.log("TRACK ID:", trackId);
+
+    // 3. Usar el endpoint `/me/player/play` para iniciar reproducción
+    const playResponse = await fetch(`${API_BASE_URL}/me/player/play?device_id=${activeDevice.id}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${apiToken}`,
+        "Content-Type": "application/json", // Este encabezado es necesario
+      },
+      body: JSON.stringify({
+        uris: [`spotify:track:${trackId}`], // ID de la pista
+      }),
+    });
+
+    if (!playResponse.ok) {
+      const errorData = await playResponse.json();
+      console.error("Error playing track:", errorData);
+      throw new Error(`Failed to play track: ${errorData.error.message}`);
+    }
+
+    console.log("Track is now playing!");
+  } catch (error) {
+    console.error("Error playing track:", error);
+  }
+};

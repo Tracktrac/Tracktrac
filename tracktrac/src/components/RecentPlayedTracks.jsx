@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Box, ListItem, ListItemText, ListItemAvatar} from '@mui/material';
+import { Box, ListItem, ListItemText, ListItemAvatar } from '@mui/material';
 import { FixedSizeList } from 'react-window';
 import Loading from '../components/loading';
+import { playTrack } from '../services/spotifyApi';  // Asegúrate de importar la función playTrack
 
 const RecentPlayedTracks = ({ tracks = [] }) => {
   const [listHeight, setListHeight] = useState(400); // Altura inicial de la lista
@@ -25,13 +26,23 @@ const RecentPlayedTracks = ({ tracks = [] }) => {
 
   if (!tracks.length) return <Loading message="Loading recently played tracks..." />;
 
+  const handleTrackClick = (trackId) => {
+    // Llamar a la función playTrack cuando se hace clic en la canción
+    playTrack(trackId);
+  };
+
   const Row = ({ index, style }) => {
     const track = tracks[index].track;
 
     return (
-      <ListItem style={style} key={track.id} disablePadding>
+      <ListItem 
+        style={style} 
+        key={track.id} 
+        disablePadding
+        onClick={() => handleTrackClick(track.id)} // Llamar a playTrack al hacer clic
+      >
         <ListItemAvatar>
-            <img
+          <img
             src={track.album.images[0]?.url}
             alt={track.album.name}
             style={{ width: 50, height: 50, borderRadius: '3px', marginRight: '15px' }}
@@ -63,6 +74,3 @@ const RecentPlayedTracks = ({ tracks = [] }) => {
 };
 
 export default RecentPlayedTracks;
-
-
-
