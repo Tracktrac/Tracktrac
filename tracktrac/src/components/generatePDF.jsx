@@ -9,9 +9,10 @@ const GeneratePdf = ({ data }) => {
 
     // Establecer fuente para el título
     doc.setFont('helvetica', 'bold');
-    doc.setFontSize(14);  // Tamaño de la fuente para el título
+    doc.setFontSize(16);  // Tamaño de la fuente para el título
     doc.text("Spotify Listening Recap", 20, 20);
 
+    doc.setFontSize(14); 
     // Título con fondo y borde
     doc.text("Total Stats", 20, 40); // Título de la sección de totales
 
@@ -66,7 +67,7 @@ const GeneratePdf = ({ data }) => {
 
     // Agregar otra línea divisoria después de las canciones
     doc.line(10, currentY, 200, currentY); // Línea divisoria
-    currentY += 5; // Dejar espacio después de la línea
+    currentY += 7; // Dejar espacio después de la línea
 
     // Añadir los artistas más escuchados
     doc.setFont('helvetica', 'bold');
