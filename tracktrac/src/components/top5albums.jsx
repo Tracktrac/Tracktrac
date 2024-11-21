@@ -67,7 +67,7 @@ font-size: 1.1rem;
 
 const AlbumArtist = styled.p`
   font-size: 0.9rem;
-  color: #ccc; 
+  color: #fff; 
   margin: 0;
   align-items: flex-start;
   text-align: left;
