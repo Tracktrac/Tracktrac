@@ -118,7 +118,7 @@ const AlbumTitle = styled.h3`
   font-weight: 600;
   color: #fff;
   margin: 0 0 4px 0;
-  white-space: nowrap;
+  white-space: normal;
   overflow: hidden;
   text-overflow: ellipsis;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
