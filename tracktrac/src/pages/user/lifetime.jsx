@@ -209,7 +209,7 @@ function UploadHistory() {
             <CardHeader title="Streams per Year" />
             <CardContent sx={styles.chartContainer}>
               <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={yearlyData}>
+                <LineChart data={yearlyData} >
                   <CartesianGrid strokearray="3 3" vertical={false} />
                   <XAxis axisLine={false} stroke="#fff" dataKey="year" tick={{ fontSize: '0.8rem' }} />
                   <YAxis axisLine={false} stroke="#fff" tickFormatter={(value) => `${(value / 1000).toFixed(1)}k`} tick={{ fontSize: '0.8rem' }} />
@@ -242,7 +242,7 @@ function UploadHistory() {
                 <MostListenedArtists artists={topArtists} />
               </CardContent>
             </Card>
-            <GeneratePdf data={{ totalPlays, totalMinutes, totalHours, totalDays, topSongs, topArtists }} />
+            <GeneratePdf data={{ totalPlays, totalMinutes, totalHours, totalDays, topSongs, topArtists, yearlyData }}/>
           </Grid>
         </Grid>
     
