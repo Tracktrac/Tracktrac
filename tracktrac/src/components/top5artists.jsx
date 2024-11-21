@@ -91,8 +91,6 @@ const Top5Artists = ({ artists = [], isExpanded = false }) => {
           </List>
         )}
       </ListContainer>
-
-      {loading && <Loading message="Loading artist details..." />}
       
       <ArtistDetailCard 
         artist={selectedArtist}

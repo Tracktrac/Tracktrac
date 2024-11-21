@@ -17,13 +17,13 @@ const Top5Tracks = ({ tracks = [], isExpanded = false }) => {
   const handleTrackClick = async (trackId, e) => {
     e.preventDefault();
     e.stopPropagation();
-    
+
     if (isExpanded) {
       try {
         setLoading(true);
         const trackDetails = await fetchTrackDetails(trackId);
         setSelectedTrack(trackDetails);
-        setModalOpen(true);
+        setModalOpen(true); 
       } catch (error) {
         console.error('Error fetching track details:', error);
       } finally {
@@ -42,7 +42,7 @@ const Top5Tracks = ({ tracks = [], isExpanded = false }) => {
 
   return (
     <div className="relative" onClick={e => e.stopPropagation()}>
-      <ListContainer isExpanded={isExpanded}>
+      <ListContainer isExpanded={isExpanded} >
         <List>
           {firstHalf.map((track, index) => (
             <ListItem 
@@ -91,9 +91,7 @@ const Top5Tracks = ({ tracks = [], isExpanded = false }) => {
           </List>
         )}
       </ListContainer>
-
-      {loading && <Loading message="Loading track details..." />}
-      
+  
       <TrackDetailCard 
         track={selectedTrack}
         open={modalOpen}

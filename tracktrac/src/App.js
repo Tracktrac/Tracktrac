@@ -35,13 +35,6 @@ const theme = createTheme({
     },
   },
   components: {
-    // MuiPaper: {
-    //   styleOverrides: {
-    //     root: {
-    //       marginBottom: 0,
-    //     },
-    //   },
-    // },
     MuiCardHeader: {
       styleOverrides: {
         title: {

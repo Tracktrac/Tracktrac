@@ -92,8 +92,6 @@ const Top5Albums = ({ albums = [], isExpanded = false }) => {
         )}
       </ListContainer>
 
-      {loading && <Loading message="Loading album details..." />}
-      
       <AlbumDetailCard 
         album={selectedAlbum}
         open={modalOpen}
