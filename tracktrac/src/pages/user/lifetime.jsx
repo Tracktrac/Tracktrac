@@ -19,6 +19,7 @@ import { LineChart, Area, Line, XAxis, YAxis, CartesianGrid, Tooltip, Responsive
 import MostListenedSongs from '../../components/topsongs';
 import MostListenedArtists from '../../components/topartists';
 import GeneratePdf from '../../components/generatePDF'; 
+import YearSelect from '../../components/Select'; 
 
 function UploadHistory() {
   const { uploadedData, uploadedFilesInfo, errorMessage, handleFilesUpload } = useDataContext();
@@ -29,6 +30,9 @@ function UploadHistory() {
   const [totalHours, setTotalHours] = useState(0);
   const [totalDays, setTotalDays] = useState(0);
   const [yearlyData, setYearlyData] = useState([]);
+  const [selectedYear, setSelectedYear] = useState(null);
+  const [monthlyData, setMonthlyData] = useState([]);
+
 
   useEffect(() => {
     if (uploadedData.length > 0) {
@@ -93,6 +97,35 @@ function UploadHistory() {
 
     setYearlyData(formattedData.sort((a, b) => a.year - b.year));
   };
+
+  const processMonthlyData = (data, year) => {
+    const monthlyCounts = Array(12).fill(0);
+  
+    data.forEach((item) => {
+      const endTime = item.ts || item.endTime;
+      const date = new Date(endTime);
+      if (date.getFullYear() === year) {
+        monthlyCounts[date.getMonth()] += 1;
+      }
+    });
+  
+    setMonthlyData(
+      monthlyCounts.map((count, index) => ({
+        month: new Date(0, index).toLocaleString('en', { month: 'short' }),
+        count,
+      }))
+    );
+  };
+  
+  useEffect(() => {
+    if (selectedYear && uploadedData.length > 0) {
+      processMonthlyData(uploadedData, selectedYear);
+    }
+  }, [selectedYear, uploadedData]);
+  
+  useEffect(() => {
+    console.log("Updated Monthly Data:", monthlyData);
+  }, [monthlyData]);
 
   //POPUP DEL GRAFICO
   const CustomTooltip = ({ active, payload, label }) => {
@@ -225,13 +258,53 @@ function UploadHistory() {
   {/* CANCIONES MAS ESCUCHADAS */}
   {/* SEGUNDA COLUMNA */}
         <Grid item xs={12} md={4}>
-            <Card sx={styles.songsCard}>
-              <CardHeader title="Most listened Songs" />
-              <CardContent>
-                <MostListenedSongs songs={topSongs} />
-              </CardContent>
-            </Card>
-          </Grid>
+          <Card sx={styles.songsCard}>
+            <CardHeader title="Most listened Songs" />
+            <CardContent>
+              <MostListenedSongs songs={topSongs} />
+            </CardContent>
+          </Card>
+          
+          <style>{scrollStyles}</style>
+          <Card sx={styles.chartCard}>
+            <CardHeader title="Streams per Month" />
+            <CardContent>
+              <Box sx={{ marginBottom: 2 }}>
+                <YearSelect
+                years={yearlyData.map((data) => data.year)}
+                selectedYear={selectedYear}
+                onYearChange={(year) => setSelectedYear(year)}
+              />
+              </Box>
+              <ResponsiveContainer width="100%" height={300}>
+                <LineChart data={monthlyData}>
+                  <CartesianGrid strokearray="3 3" vertical={false} />
+                  <XAxis
+                    axisLine={false}
+                    dataKey="month"
+                    stroke="#fff"
+                    tick={{ fontSize: '0.8rem' }}
+                  />
+                  <YAxis
+                    axisLine={false}
+                    stroke="#fff"
+                    tickFormatter={(value) => `${(value / 1000).toFixed(1)}k`}
+                    tick={{ fontSize: '0.8rem' }}
+                  />
+                  <Tooltip content={<CustomTooltip />} />
+                  <Area dataKey="count" stroke="#8884d8" fill="#fff" />
+                  <Line
+                    dot={{ fill: '#0E8943', stroke: '#0E8943', r: 3 }}
+                    type="monotone"
+                    dataKey="count"
+                    stroke="#0E8943"
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+        </Grid>
+        
 
   {/* ARTISTAS MAS ESCUCHADOS */}
   {/* TERCERA COLUMNA */}
@@ -350,6 +423,7 @@ const styles = {
 
   //GRAFICO chartCard
   chartCard: {
+    marginTop: 3,
     boxShadow: 3,
     borderRadius: 10,
     padding: 2,
@@ -417,5 +491,23 @@ const styles = {
   },
   
 };
+
+const scrollStyles = `
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+  ::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+  }
+`;
 
 export default UploadHistory;

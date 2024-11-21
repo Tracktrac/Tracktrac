@@ -7,7 +7,7 @@ const GeneratePdf = ({ data }) => {
     const doc = new jsPDF();
 
     // Check if data is valid before proceeding
-    if (!data || !Array.isArray(data.yearlyData) || !Array.isArray(data.topSongs) || !Array.isArray(data.topArtists)) {
+    if (!data || !Array.isArray(data.yearlyData) || !Array.isArray(data.topSongs) || !Array.isArray(data.topArtists) || !Array.isArray(data.monthlyData)) {
       console.error("Invalid data format");
       return;
     }
@@ -75,6 +75,26 @@ const GeneratePdf = ({ data }) => {
     doc.line(10, currentY, 200, currentY); // Línea divisoria
     currentY += 7; // Dejar espacio después de la línea
 
+    // Agregar los streams por mes
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(12);  // Títulos de la sección de meses
+    doc.text("Streams per Month", 20, currentY); // Título de la sección de meses
+    doc.setFont('helvetica', 'normal');
+    currentY += 8; // Reducir el espacio entre título y contenido
+
+    data.monthlyData.forEach((monthData, index) => {
+      if (currentY > 270) { // Comprobar si estamos cerca del final de la página
+        doc.addPage();  // Agregar una nueva página
+        currentY = 20;  // Restablecer la posición Y en la nueva página
+      }
+      doc.text(`${monthData.month}: ${monthData.count} streams`, 20, currentY);
+      currentY += 6; // Espaciado para cada mes
+    });
+
+    // Agregar otra línea divisoria después de los streams mensuales
+    doc.line(10, currentY, 200, currentY); // Línea divisoria
+    currentY += 7; // Dejar espacio después de la línea
+
     // Añadir las canciones más escuchadas
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(12);  // Títulos de la sección de canciones
@@ -134,3 +154,4 @@ const GeneratePdf = ({ data }) => {
 };
 
 export default GeneratePdf;
+
