@@ -163,3 +163,80 @@ export const playTrack = async (trackId) => {
     console.error("Error playing track:", error);
   }
 };
+
+
+// Función para hacer fetch de los detalles de los top artistas 
+export const fetchArtistDetails = async (artistId) => {
+  const apiToken = getApiToken();
+  if (!apiToken) throw new Error("No API token found");
+
+  const response = await fetch(
+    `${API_BASE_URL}/artists/${artistId}`,
+    { headers: { Authorization: `Bearer ${apiToken}` } }
+  );
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    console.error('Error fetching artist details:', errorData);
+    throw new Error(`Artist details fetch failed: ${errorData.error.message}`);
+  }
+
+  return response.json();
+};
+
+// Función para hacer fetch de las top tracks de los artistas 
+export const fetchArtistTopTracks = async (artistId) => {
+  const apiToken = getApiToken();
+  if (!apiToken) throw new Error("No API token found");
+
+  const response = await fetch(
+    `${API_BASE_URL}/artists/${artistId}/top-tracks?market=ES`,
+    { headers: { Authorization: `Bearer ${apiToken}` } }
+  );
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    console.error('Error fetching artist top tracks:', errorData);
+    throw new Error(`Artist top tracks fetch failed: ${errorData.error.message}`);
+  }
+
+  return response.json();
+};
+
+// Función para hacer fetch de los detalles de los albums 
+export const fetchAlbumDetails = async (albumId) => {
+  const apiToken = getApiToken();
+  if (!apiToken) throw new Error("No API token found");
+
+  const response = await fetch(
+    `${API_BASE_URL}/albums/${albumId}`,
+    { headers: { Authorization: `Bearer ${apiToken}` } }
+  );
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    console.error('Error fetching album details:', errorData);
+    throw new Error(`Album details fetch failed: ${errorData.error.message}`);
+  }
+
+  return response.json();
+};
+
+// Función para hacer fetch de los detalles de las tracks
+export const fetchTrackDetails = async (trackId) => {
+  const apiToken = getApiToken();
+  if (!apiToken) throw new Error("No API token found");
+
+  const response = await fetch(
+    `${API_BASE_URL}/tracks/${trackId}`,
+    { headers: { Authorization: `Bearer ${apiToken}` } }
+  );
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    console.error('Error fetching track details:', errorData);
+    throw new Error(`Track details fetch failed: ${errorData.error.message}`);
+  }
+
+  return response.json();
+};
