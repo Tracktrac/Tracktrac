@@ -1,17 +1,18 @@
 import { useState, useEffect } from 'react';
 import { fetchTopTracks } from '../services/spotifyApi';
 
-export const useTopTracks = (timeRange = 'medium_term', limit = 5) => {
+export const useTopTracks = (timeRange = 'medium_term', initialLimit = 10) => {
   const [topTracks, setTopTracks] = useState([]);
   const [totalTracks, setTotalTracks] = useState(0);
   const [totalMinutes, setTotalMinutes] = useState(0); 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [limit, setLimit] = useState(initialLimit);
 
   useEffect(() => {
     const fetchTracks = async () => {
       try {
-        const data = await fetchTopTracks(timeRange, limit);
+        const data = await fetchTopTracks(timeRange, 10);
         setTopTracks(data.items);
 
         // Calcular el total de tracks
@@ -34,7 +35,7 @@ export const useTopTracks = (timeRange = 'medium_term', limit = 5) => {
     };
 
     fetchTracks();
-  }, [timeRange, limit]);
+  }, [timeRange]);
 
-  return { topTracks, totalTracks, totalMinutes, loading, error };
+  return { topTracks: topTracks.slice(0, limit), totalTracks, totalMinutes, loading, error, setLimit };
 };

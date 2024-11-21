@@ -1,16 +1,17 @@
 import { useState, useEffect } from 'react';
 import { fetchTopArtists } from '../services/spotifyApi';
 
-export const useTopArtists = (timeRange = 'medium_term', limit = 5) => {
+export const useTopArtists = (timeRange = 'medium_term', initialLimit = 5) => {
   const [topArtists, setTopArtists] = useState([]);
   const [totalArtists, setTotalArtists] = useState(0);  // Para almacenar el total de artistas
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [limit, setLimit] = useState(initialLimit);
 
   useEffect(() => {
     const fetchArtists = async () => {
       try {
-        const data = await fetchTopArtists(timeRange, limit);
+        const data = await fetchTopArtists(timeRange, 10);
         setTopArtists(data.items);
 
         // Calcular el total de artistas únicos
@@ -25,7 +26,7 @@ export const useTopArtists = (timeRange = 'medium_term', limit = 5) => {
     };
 
     fetchArtists();
-  }, [timeRange, limit]);
+  }, [timeRange]);
 
-  return { topArtists, totalArtists, loading, error };
+  return { topArtists: topArtists.slice(0, limit), totalArtists, loading, error, setLimit };
 };
