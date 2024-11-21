@@ -183,12 +183,6 @@ function UploadHistory() {
       <Typography variant="h3" gutterBottom sx={styles.title}>
         Spotify Listening Recap
       </Typography>
-
-      {/* ROW CON TRES COLUMNAS */}
-      <Grid container spacing={4}>
-        {/* PRIMERA COLUMNA */}
-        <Grid item xs={12} md={4}>
-
 {/* SUBIR ARCHIVOS */}
         {uploadedFilesInfo.length === 0 ? (
           <Box textAlign="center">
@@ -207,9 +201,21 @@ function UploadHistory() {
                 onChange={(e) => handleFilesUpload(e.target.files)}
               />
             </Button>
+
+            <Box textAlign="center" sx={{ marginTop: 4 }}>
+              <Typography variant="h6" gutterBottom>
+                How to get the files
+              </Typography>
+              <video width="80%" controls>
+                <source src="/videos/tutorial.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </Box>
           </Box>
         ) : (
   // ARCHIVOS SUBIDOS
+  <Grid container spacing={4}>
+    <Grid item xs={12} md={4}>
           <Card sx={styles.uploadedCard}>
             <CardHeader
               title={`${uploadedFilesInfo.length} files uploaded`} // Usando template string
@@ -229,7 +235,7 @@ function UploadHistory() {
               </List>
             </CardContent>
           </Card>
-        )}
+        
 
   {/* TOTALES DE ESCUCHA */}
             <Card sx={styles.listenedCard}>
@@ -344,6 +350,7 @@ function UploadHistory() {
             <GeneratePdf data={{ totalPlays, totalMinutes, totalHours, totalDays, topSongs, topArtists, yearlyData, structuredMonthlyData  }}/>
           </Grid>
         </Grid>
+        )}
     
 {/* ERROR */}
       {errorMessage && (
