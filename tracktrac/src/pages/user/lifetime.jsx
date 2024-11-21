@@ -18,6 +18,7 @@ import { FileCopy } from '@mui/icons-material';
 import { LineChart, Area, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import MostListenedSongs from '../../components/topsongs';
 import MostListenedArtists from '../../components/topartists';
+import GeneratePdf from '../../components/generatePDF'; 
 
 function UploadHistory() {
   const { uploadedData, uploadedFilesInfo, errorMessage, handleFilesUpload } = useDataContext();
@@ -241,6 +242,7 @@ function UploadHistory() {
                 <MostListenedArtists artists={topArtists} />
               </CardContent>
             </Card>
+            <GeneratePdf data={{ totalPlays, totalMinutes, totalHours, totalDays, topSongs, topArtists }} />
           </Grid>
         </Grid>
     
