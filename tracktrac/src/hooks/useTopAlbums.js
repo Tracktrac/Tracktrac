@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useTopTracks } from './useTopTracks';
 
-export const useTopAlbums = (timeRange = 'medium_term', limit = 5) => {
+export const useTopAlbums = (timeRange = 'medium_term', limit = 50) => {
   const { topTracks, loading, error } = useTopTracks(timeRange, limit);
   const [topAlbums, setTopAlbums] = useState([]);
   const [totalAlbums, setTotalAlbums] = useState(0);  // Para almacenar el total de álbumes
