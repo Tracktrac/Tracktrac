@@ -1,22 +1,16 @@
 import React from 'react';
-import { Grid, Container, Typography, Box} from '@mui/material';
-import Top5Tracks from '../../components/top5tracks'; 
-import Top5Artists from '../../components/top5artists'; 
+import { Grid, Container, Typography, Box } from '@mui/material';
+import Top5Tracks from '../../components/top5tracks';
+import Top5Artists from '../../components/top5artists';
 import Top5Albums from '../../components/top5albums';
 import { useTopTracks } from '../../hooks/useTopTracks';
 import { useTopArtists } from '../../hooks/useTopArtists';
 import { useTopAlbums } from '../../hooks/useTopAlbums';
-// import { useNavigate } from 'react-router-dom';
 
 const MonthRecap = () => {
   const { topTracks } = useTopTracks('short_term');
   const { topArtists } = useTopArtists('short_term');
   const { topAlbums } = useTopAlbums('short_term');
-  // const navigate = useNavigate();
-
-  // const handleSeeMoreClick = () => {
-  //   navigate('/top-songs-month');
-  // };
 
   return (
     <Container maxWidth="xl" sx={{ paddingTop: 4 }}>
@@ -24,6 +18,7 @@ const MonthRecap = () => {
         Month Recap
       </Typography>
       <Grid container spacing={4}>
+        {/* Primera fila con los tres cards */}
         <Grid item xs={12} md={4}>
           <Box bgcolor="#DC4D56" p={3} borderRadius={6} textAlign="center">
             <Typography sx={styles.top} variant="h5" gutterBottom>
@@ -52,6 +47,7 @@ const MonthRecap = () => {
     </Container>
   );
 };
+
 const styles = {
   title: {
     textAlign: 'center',
@@ -66,4 +62,5 @@ const styles = {
     fontSize: '1.3rem',
   },
 };
+
 export default MonthRecap;

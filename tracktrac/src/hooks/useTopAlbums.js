@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useTopTracks } from './useTopTracks';
 
-export const useTopAlbums = (timeRange = 'medium_term', limit = 50) => {
-  const { topTracks, loading, error } = useTopTracks(timeRange, limit );
+export const useTopAlbums = (timeRange = 'medium_term', limit = 5) => {
+  const { topTracks, loading, error } = useTopTracks(timeRange, limit);
   const [topAlbums, setTopAlbums] = useState([]);
+  const [totalAlbums, setTotalAlbums] = useState(0);  // Para almacenar el total de álbumes
 
   useEffect(() => {
     if (topTracks.length) {
@@ -28,8 +29,11 @@ export const useTopAlbums = (timeRange = 'medium_term', limit = 50) => {
         .sort((a, b) => b.count - a.count)
         .slice(0, 5);
       setTopAlbums(sortedAlbums);
+
+      // Establecer el total de álbumes diferentes
+      setTotalAlbums(albumMap.size);
     }
   }, [topTracks]);
 
-  return { topAlbums, loading, error };
+  return { topAlbums, totalAlbums, loading, error };
 };

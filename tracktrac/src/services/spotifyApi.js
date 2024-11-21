@@ -75,6 +75,36 @@ export const fetchTopArtists = async (timeRange = 'medium_term', limit = 5) => {
   return response.json();
 };
 
+
+export const fetchGenres = async () => {
+  const apiToken = getApiToken();
+
+  if (!apiToken) {
+    console.error("No API token found");
+    return [];
+  }
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/recommendations/available-genre-seeds`, {
+      headers: { Authorization: `Bearer ${apiToken}` },
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("Error fetching genres:", errorData);
+      throw new Error(`Failed to fetch genres: ${errorData.error.message}`);
+    }
+
+    const data = await response.json();
+    console.log("Fetched genres:", data.genres);
+
+    return data.genres; // Devuelve la lista de géneros
+  } catch (error) {
+    console.error("Error fetching genres:", error);
+    return [];
+  }
+};
+
 export const playTrack = async (trackId) => {
   const apiToken = getApiToken();
   console.log("API TOKEN: ", apiToken);
@@ -96,7 +126,7 @@ export const playTrack = async (trackId) => {
     }
 
     const devices = await devicesResponse.json();
-    console.log("DEVICES: ", devices);
+    // console.log("DEVICES: ", devices);
 
     // 2. Identificar el dispositivo activo
     const activeDevice = devices.devices.find((device) => device.is_active);
@@ -105,10 +135,10 @@ export const playTrack = async (trackId) => {
       return;
     }
 
-    console.log("Active Device ID:", activeDevice.id);
+    // console.log("Active Device ID:", activeDevice.id);
     console.log("Active Device Details:", activeDevice);
 
-    console.log("TRACK ID:", trackId);
+    // console.log("TRACK ID:", trackId);
 
     // 3. Usar el endpoint `/me/player/play` para iniciar reproducción
     const playResponse = await fetch(`${API_BASE_URL}/me/player/play?device_id=${activeDevice.id}`, {
