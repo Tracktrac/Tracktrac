@@ -87,7 +87,7 @@ const GeneratePdf = ({ data }) => {
         doc.addPage();  // Agregar una nueva página
         currentY = 20;  // Restablecer la posición Y en la nueva página
       }
-      doc.text(`${index + 1}. ${song[0]} - ${song[1]} plays`, 20, currentY);
+      doc.text(`${index + 1}. ${song[0]} - ${song[1]} streams`, 20, currentY);
       currentY += 6; // Reducir el espaciado para cada canción
     });
 
@@ -107,7 +107,7 @@ const GeneratePdf = ({ data }) => {
         doc.addPage();  // Agregar una nueva página
         currentY = 20;  // Restablecer la posición Y en la nueva página
       }
-      doc.text(`${index + 1}. ${artist[0]} - ${artist[1]} plays`, 20, currentY);
+      doc.text(`${index + 1}. ${artist[0]} - ${artist[1]} streams`, 20, currentY);
       currentY += 6; // Reducir el espaciado para cada artista
     });
 
