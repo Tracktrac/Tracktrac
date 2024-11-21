@@ -32,7 +32,7 @@ function UploadHistory() {
   const [yearlyData, setYearlyData] = useState([]);
   const [selectedYear, setSelectedYear] = useState(null);
   const [monthlyData, setMonthlyData] = useState([]);
-
+  const [structuredMonthlyData, setStructuredMonthlyData] = useState({});
 
   useEffect(() => {
     if (uploadedData.length > 0) {
@@ -124,8 +124,34 @@ function UploadHistory() {
   }, [selectedYear, uploadedData]);
   
   useEffect(() => {
-    console.log("Updated Monthly Data:", monthlyData);
+  console.log("Updated Monthly Data:", monthlyData);
   }, [monthlyData]);
+
+  const processYearlyMonthlyData = (data) => {
+    const yearlyMonthlyCounts = {};
+  
+    data.forEach((item) => {
+      const endTime = item.ts || item.endTime;  // Ajustar según el formato de tus datos
+      const year = new Date(endTime).getFullYear();
+      const month = new Date(endTime).toLocaleString('en', { month: 'short' });  // Ej. "Jan", "Feb", etc.
+  
+      if (year && month) {
+        if (!yearlyMonthlyCounts[year]) {
+          yearlyMonthlyCounts[year] = {};
+        }
+  
+        yearlyMonthlyCounts[year][month] = (yearlyMonthlyCounts[year][month] || 0) + 1;
+      }
+    });
+  
+    setStructuredMonthlyData(yearlyMonthlyCounts); // Esto actualizará el estado con el formato deseado
+  };
+  
+  useEffect(() => {
+    if (uploadedData.length > 0) {
+      processYearlyMonthlyData(uploadedData);  // Llamar a la nueva función
+    }
+  }, [uploadedData]);
 
   //POPUP DEL GRAFICO
   const CustomTooltip = ({ active, payload, label }) => {
@@ -315,7 +341,7 @@ function UploadHistory() {
                 <MostListenedArtists artists={topArtists} />
               </CardContent>
             </Card>
-            <GeneratePdf data={{ totalPlays, totalMinutes, totalHours, totalDays, topSongs, topArtists, yearlyData }}/>
+            <GeneratePdf data={{ totalPlays, totalMinutes, totalHours, totalDays, topSongs, topArtists, yearlyData, structuredMonthlyData  }}/>
           </Grid>
         </Grid>
     
