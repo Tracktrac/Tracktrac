@@ -12,16 +12,15 @@ export const useTopTracks = (timeRange = 'medium_term', initialLimit = 10) => {
   useEffect(() => {
     const fetchTracks = async () => {
       try {
-        const data = await fetchTopTracks(timeRange, 10);
+        // Solicitamos 50 tracks para tener suficientes datos
+        const data = await fetchTopTracks(timeRange, 50);
         setTopTracks(data.items);
 
-        // Calcular el total de tracks
+        // Calculamos totales
         const totalTrackCount = data.items.length;
         setTotalTracks(totalTrackCount);
 
-        // Calcular el total de minutos
         const totalMinutesCount = data.items.reduce((total, track) => {
-          // Convertir duración de milisegundos a minutos
           const trackDurationInMinutes = track.duration_ms / 1000 / 60;
           return total + trackDurationInMinutes;
         }, 0);
@@ -37,5 +36,13 @@ export const useTopTracks = (timeRange = 'medium_term', initialLimit = 10) => {
     fetchTracks();
   }, [timeRange]);
 
-  return { topTracks: topTracks.slice(0, limit), totalTracks, totalMinutes, loading, error, setLimit };
+  return { 
+    // Solo retornamos la cantidad solicitada de tracks
+    topTracks: topTracks.slice(0, limit), 
+    totalTracks, 
+    totalMinutes, 
+    loading, 
+    error, 
+    setLimit 
+  };
 };
