@@ -5,6 +5,8 @@ import {
   Album,
   MusicNote,
   Person,
+  TouchApp,
+  UnfoldLess
 } from '@mui/icons-material';
 import Top5Tracks from '../../components/top5tracks';
 import Top5Artists from '../../components/top5artists';
@@ -97,7 +99,7 @@ const SixMonthRecap = () => {
           transition={{ duration: 0.5, ease: "easeOut" }}
         >
           <Typography sx={styles.title} variant="h3" gutterBottom>
-            Your 6-month in Music
+            Your 6 months in Music
           </Typography>
           <Typography sx={styles.subtitle} variant="h6">
             Hey {profileData?.display_name}! Here's what you've been loving these 6 months.
@@ -126,35 +128,50 @@ const SixMonthRecap = () => {
                 transition: { duration: 0.2 }
               }}
             >
-              <Card 
-                sx={{
-                  ...styles.sectionCard,
-                  background: section.gradient,
-                  display: expandedSection && expandedSection !== section.id ? 'none' : 'block',
-                  transform: expandedSection === section.id ? 'scale(1)' : 'scale(1)',
-                }}
-                onClick={() => handleExpand(section.id)}
-              >
-                <Box sx={styles.sectionHeader}>
-                  <Box sx={styles.iconWrapper}>
-                    <section.icon sx={styles.sectionIcon} />
+                <Card 
+                  sx={{
+                    ...styles.sectionCard,
+                    background: section.gradient,
+                    display: expandedSection && expandedSection !== section.id ? 'none' : 'block',
+                    transform: expandedSection === section.id ? 'scale(1)' : 'scale(1)',
+                  }}
+                  onClick={() => handleExpand(section.id)}
+                >
+                  <Box sx={styles.sectionHeader}>
+                    <Box sx={styles.iconWrapper}>
+                      <section.icon sx={styles.sectionIcon} />
+                    </Box>
+                    <Box>
+                      <Typography sx={styles.sectionTitle}>
+                        {section.title}
+                      </Typography>
+                      <Typography sx={styles.sectionDescription}>
+                        {section.description}
+                      </Typography>
+                    </Box>
+                    {!expandedSection ? (
+                      <Box sx={styles.interactionHint}>
+                        <TouchApp sx={{ fontSize: 12, color: 'rgba(255,255,255,0.8)' }} />
+                        <Typography sx={styles.hintText}>
+                          Click for details
+                        </Typography>
+                      </Box>
+                    ) : expandedSection === section.id && (
+                      <Box sx={styles.interactionHint}>
+                        <UnfoldLess sx={{ fontSize: 12, color: 'rgba(255,255,255,0.8)' }} />
+                        <Typography sx={styles.hintText}>
+                          Click to minimize
+                        </Typography>
+                      </Box>
+                    )}
                   </Box>
-                  <Box>
-                    <Typography sx={styles.sectionTitle}>
-                      {section.title}
-                    </Typography>
-                    <Typography sx={styles.sectionDescription}>
-                      {section.description}
-                    </Typography>
+                  <Box sx={styles.contentWrapper}>
+                    <section.component 
+                      {...{ [section.id]: section.data }}
+                      isExpanded={expandedSection === section.id}
+                    />
                   </Box>
-                </Box>
-                <Box sx={styles.contentWrapper}>
-                  <section.component 
-                    {...{ [section.id]: section.data }}
-                    isExpanded={expandedSection === section.id}
-                  />
-                </Box>
-              </Card>
+                </Card>
             </motion.div>
           </Grid>
         ))}
@@ -200,6 +217,7 @@ const styles = {
       boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
       border: '1px solid rgba(255,255,255,0.2)',
     },
+    position: 'relative',
   },
   sectionHeader: {
     display: 'flex',
@@ -235,7 +253,22 @@ const styles = {
   contentWrapper: {
     mt: 2,
     transition: 'all 0.3s ease',
-  }
+  },
+  interactionHint: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 1,
+    position: 'absolute',
+    right: 16,
+    top: 16,
+    backgroundColor: 'rgba(0,0,0,0.2)',
+    padding: '4px 8px',
+    borderRadius: '8px',
+    transition: 'all 0.3s ease',
+    '&:hover': {
+      backgroundColor: 'rgba(0,0,0,0.3)',
+    }
+  },
 };
 
 export default SixMonthRecap;

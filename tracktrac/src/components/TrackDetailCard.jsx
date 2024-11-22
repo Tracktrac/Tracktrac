@@ -196,11 +196,6 @@ const TrackDetailCard = ({ track, open, onClose }) => {
                 variant="outlined"
               />
               <Chip 
-                label={`Type: ${track.album?.album_type}`}
-                size="small"
-                variant="outlined"
-              />
-              <Chip 
                 label={`Total Tracks: ${track.album?.total_tracks}`}
                 size="small"
                 variant="outlined"

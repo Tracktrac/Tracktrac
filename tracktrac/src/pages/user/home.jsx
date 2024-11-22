@@ -7,6 +7,7 @@ import { useRecentPlayedTracks } from '../../hooks/useRecentPlayedTracks';
 import Loading from '../../components/loading';
 import RecentPlayedTracks from '../../components/RecentPlayedTracks';
 import { FaCrown } from 'react-icons/fa';
+
 const Home = () => {
   const { logout } = useAuth();
   const { profileData, loading, error } = useProfile();
@@ -98,16 +99,31 @@ const Home = () => {
 
         {/* Columna Derecha - Pistas Reproducidas Recientemente */}
         <Grid item xs={12} md={9}>
-          <Card sx={styles.recentTracksCard}>
-            <Box sx={styles.recentTracksHeader}>
-              <LibraryMusic sx={styles.libraryMusicIcon} />
-              <Typography variant="h5" sx={styles.recentTracksTypography} gutterBottom>
-                Recently Played Tracks
-              </Typography>
-            </Box>
-            <RecentPlayedTracks tracks={recentTracks} />
-          </Card>
-        </Grid>
+        <Card sx={{
+          ...styles.recentTracksCard,
+          '& .MuiListItem-root': {
+            display: 'flex',
+            justifyContent: 'space-between',
+            gap: 2,
+            pr: 3, // Padding derecho para el icono
+            '&:hover': {
+              backgroundColor: 'rgba(255, 255, 255, 0.1)',
+              '& .play-icon': {
+                opacity: 1,
+                visibility: 'visible'
+              }
+            }
+          }
+        }}>
+          <Box sx={styles.recentTracksHeader}>
+            <LibraryMusic sx={styles.libraryMusicIcon} />
+            <Typography variant="h5" sx={styles.recentTracksTypography} gutterBottom>
+              Recently Played Tracks
+            </Typography>
+          </Box>
+          <RecentPlayedTracks tracks={recentTracks} />
+        </Card>
+      </Grid>
       </Grid>
     </Container>
   );
@@ -206,6 +222,13 @@ const styles = {
     marginBottom: 5,
     borderRadius: 3,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    // Nuevo: asegurar que el contenedor tenga position relative para el icono absolute
+    position: 'relative',
+    overflow: 'hidden',
+    // Nuevo: estilos para el hover y el icono
+    '& .MuiListItem-root': {
+      transition: 'background-color 0.2s ease',
+    }
   },
   recentTracksHeader: {
     display: 'flex',
