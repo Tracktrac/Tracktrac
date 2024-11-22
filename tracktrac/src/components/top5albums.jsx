@@ -7,6 +7,7 @@ import { fetchAlbumDetails } from '../services/spotifyApi';
 const Top5Albums = ({ albums = [], isExpanded = false }) => {
   const [selectedAlbum, setSelectedAlbum] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
+  // eslint-disable-next-line
   const [loading, setLoading] = useState(false);
 
   if (!albums.length) return <Loading message="Loading albums..." />;

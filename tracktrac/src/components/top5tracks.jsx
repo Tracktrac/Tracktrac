@@ -7,6 +7,7 @@ import { fetchTrackDetails } from '../services/spotifyApi';
 const Top5Tracks = ({ tracks = [], isExpanded = false }) => {
   const [selectedTrack, setSelectedTrack] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
+  // eslint-disable-next-line
   const [loading, setLoading] = useState(false);
 
   if (!tracks.length) return <Loading message="Loading tracks..." />;

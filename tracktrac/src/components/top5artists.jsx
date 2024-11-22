@@ -7,6 +7,7 @@ import { fetchArtistDetails } from '../services/spotifyApi';
 const Top5Artists = ({ artists = [], isExpanded = false }) => {
   const [selectedArtist, setSelectedArtist] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
+  // eslint-disable-next-line
   const [loading, setLoading] = useState(false);
 
   if (!artists.length) return <Loading message="Loading artists..." />;
